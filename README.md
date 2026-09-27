@@ -1,6 +1,6 @@
 # The Whitley Captures
 
-Rachel’s approved replacement website: Next.js App Router, TypeScript, Tailwind and an embedded Sanity Studio. Webflow, DNS and the production domain remain untouched. Initial content is imported into Sanity and published-content rendering is verified. Authenticated draft-preview checks still require a local Viewer token.
+Rachel’s approved replacement website: Next.js App Router, TypeScript, Tailwind and an embedded Sanity Studio. Webflow, DNS and the production domain remain untouched. Initial content is imported into Sanity and published-content rendering is verified. Authenticated draft preview is connected locally and verified on the homepage and Baby & Newborn page. A supervised edit-and-publish walkthrough remains outstanding.
 
 ## Local review
 

@@ -79,3 +79,7 @@ Google CLI login succeeded and `http://localhost:3000` was added as a credential
 - Signed-in Studio gallery list, newborn gallery editor and homepage navigation were checked after patching the react-i18next namespace bug. Patch installation is reproducible and covered by a browser regression test.
 - A transient standalone type-check failure involved duplicate generated declarations under `.next/types`; after the production build regenerated them, the standalone check passed. Generated output is not committed.
 - Draft preview still requires the server-only Viewer token and an authenticated end-to-end walkthrough. Hosting, production domain migration and live form submission remain separate tasks. Webflow and DNS are unchanged.
+
+## Draft preview connected — 27 September 2026
+
+The local Viewer token successfully authenticated a read-only draft-perspective query. After restarting the development server, the signed-in Studio exposed Preview website. Authenticated preview rendered the homepage and retained draft mode when navigating to Baby & Newborn; the browser reported no console errors. No content was edited or published and no enquiry was submitted. The token remains in ignored `.env.local`, outside Git. The supervised draft-edit/publish/exit walkthrough remains outstanding.

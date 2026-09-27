@@ -20,9 +20,9 @@
 
 ## Remaining acceptance work
 
-Authenticated **save draft → preview → publish → exit preview** has not been certified. `SANITY_API_READ_TOKEN` still needs a Viewer token in the local environment. Until configured, Studio can save drafts and publish content, but its Preview website action returns setup guidance. Published website content refreshes within about a minute.
+Authenticated preview entry and navigation are now verified locally with the server-only Viewer token. The homepage and Baby & Newborn page displayed the draft banner without console errors. The full **save draft → preview → publish → exit preview** workflow has not been certified: no content was changed or published during this check. Published website content refreshes within about a minute.
 
-After configuring the token, perform a supervised editor walkthrough with Rachel: change a draft heading, replace a photograph, reorder gallery images, check phone/desktop preview and publish an agreed change. Do not claim this workflow is verified from schema checks alone.
+Next, perform a supervised editor walkthrough with Rachel: change a draft heading, replace a photograph, reorder gallery images, check phone/desktop preview and publish an agreed change. Do not claim this workflow is verified from schema checks alone.
 
 Rachel must also confirm legacy prices, final photographs and the outstanding content items in CONTENT-REVIEW.md. The site remains staging/noindex; production migration is a separate decision.
 
