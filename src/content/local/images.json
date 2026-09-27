@@ -1,0 +1,200 @@
+{
+  "logo": {
+    "id": "logo",
+    "src": "/images/logo.png",
+    "width": 1062,
+    "height": 776,
+    "alt": "The Whitley Captures photography",
+    "position": {
+      "x": 50,
+      "y": 50
+    }
+  },
+  "rachel": {
+    "id": "rachel",
+    "src": "/images/rachel.jpg",
+    "width": 2000,
+    "height": 3000,
+    "alt": "Rachel smiling outdoors in a soft blue jumper",
+    "position": {
+      "x": 50,
+      "y": 35
+    }
+  },
+  "baby": {
+    "id": "baby",
+    "src": "/images/baby.jpg",
+    "width": 2000,
+    "height": 1333,
+    "alt": "Sleeping newborn wrapped in pink, surrounded by little stars",
+    "position": {
+      "x": 50,
+      "y": 50
+    }
+  },
+  "portraits": {
+    "id": "portraits",
+    "src": "/images/portraits.jpg",
+    "width": 2000,
+    "height": 1333,
+    "alt": "A woman holding her black dog in the studio",
+    "position": {
+      "x": 50,
+      "y": 50
+    }
+  },
+  "family": {
+    "id": "family",
+    "src": "/images/family.jpg",
+    "width": 2000,
+    "height": 1333,
+    "alt": "Parents sitting together with their young daughter",
+    "position": {
+      "x": 50,
+      "y": 50
+    }
+  },
+  "location": {
+    "id": "location",
+    "src": "/images/location.jpg",
+    "width": 2000,
+    "height": 1333,
+    "alt": "A woman in a pink dress beneath flowering trees",
+    "position": {
+      "x": 50,
+      "y": 50
+    }
+  },
+  "cake": {
+    "id": "cake",
+    "src": "/images/cake.jpg",
+    "width": 2000,
+    "height": 1349,
+    "alt": "A little girl enjoying her first birthday cake smash",
+    "position": {
+      "x": 50,
+      "y": 50
+    }
+  },
+  "sitter": {
+    "id": "sitter",
+    "src": "/images/sitter.jpg",
+    "width": 2000,
+    "height": 1333,
+    "alt": "A smiling baby sitting in a floral dress",
+    "position": {
+      "x": 50,
+      "y": 50
+    }
+  },
+  "maternity0": {
+    "id": "maternity0",
+    "src": "/images/maternity0.jpg",
+    "width": 2000,
+    "height": 3000,
+    "alt": "Expectant mother seated in the studio, holding her bump",
+    "position": {
+      "x": 50,
+      "y": 44
+    }
+  },
+  "maternity1": {
+    "id": "maternity1",
+    "src": "/images/maternity1.jpg",
+    "width": 1920,
+    "height": 1279,
+    "alt": "Maternity portrait in gold against a dark backdrop",
+    "position": {
+      "x": 50,
+      "y": 50
+    }
+  },
+  "maternity2": {
+    "id": "maternity2",
+    "src": "/images/maternity2.jpg",
+    "width": 2000,
+    "height": 1333,
+    "alt": "A child kissing her mother’s bump",
+    "position": {
+      "x": 50,
+      "y": 50
+    }
+  },
+  "newborn0": {
+    "id": "newborn0",
+    "src": "/images/newborn0.jpg",
+    "width": 2000,
+    "height": 1334,
+    "alt": "Sleeping baby wearing a star headband and cuddling a soft toy",
+    "position": {
+      "x": 50,
+      "y": 50
+    }
+  },
+  "newborn1": {
+    "id": "newborn1",
+    "src": "/images/newborn1.jpg",
+    "width": 2000,
+    "height": 1334,
+    "alt": "Newborn asleep on a deep green blanket",
+    "position": {
+      "x": 50,
+      "y": 50
+    }
+  },
+  "gallery0": {
+    "id": "gallery0",
+    "src": "/images/gallery0.jpg",
+    "width": 2000,
+    "height": 1333,
+    "alt": "Newborn asleep on a blue blanket",
+    "position": {
+      "x": 50,
+      "y": 50
+    }
+  },
+  "gallery1": {
+    "id": "gallery1",
+    "src": "/images/gallery1.jpg",
+    "width": 2000,
+    "height": 1333,
+    "alt": "Parents holding their newborn together",
+    "position": {
+      "x": 50,
+      "y": 50
+    }
+  },
+  "gallery2": {
+    "id": "gallery2",
+    "src": "/images/gallery2.jpg",
+    "width": 2000,
+    "height": 1333,
+    "alt": "Baby wrapped in a soft pink blanket, looking towards the camera",
+    "position": {
+      "x": 50,
+      "y": 50
+    }
+  },
+  "gallery3": {
+    "id": "gallery3",
+    "src": "/images/gallery3.jpg",
+    "width": 2000,
+    "height": 1334,
+    "alt": "Parents leaning towards their newborn in a black and white portrait",
+    "position": {
+      "x": 50,
+      "y": 50
+    }
+  },
+  "woodland": {
+    "id": "woodland",
+    "src": "/images/woodland.jpg",
+    "width": 2000,
+    "height": 1333,
+    "alt": "A little boy peeking around a tree in the woods",
+    "position": {
+      "x": 50,
+      "y": 50
+    }
+  }
+}
