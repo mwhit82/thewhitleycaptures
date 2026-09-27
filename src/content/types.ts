@@ -14,6 +14,9 @@ export type Testimonial = {
   quote: string;
   name: string;
   serviceId?: string;
+  serviceIds?: string[];
+  featured?: boolean;
+  order?: number;
 };
 export type Gallery = {
   id: string;
@@ -40,6 +43,7 @@ export type Service = {
   slug: string;
   order: number;
   description: string;
+  cardImage?: ContentImage;
   hero: ContentImage;
   introduction: string;
   sections: ContentSection[];
@@ -75,6 +79,9 @@ export type Homepage = {
     image: ContentImage;
     cta: Link;
     secondaryCta: Link;
+    footnote?: string;
+    motto?: string;
+    photoCaption?: string;
   };
   introduction: {
     eyebrow: string;
@@ -82,6 +89,7 @@ export type Homepage = {
     paragraphs: string[];
     image: ContentImage;
     signature: string;
+    imageCaption?: string;
   };
   enquiry: { eyebrow: string; heading: string; copy: string };
   services: { eyebrow: string; heading: string; copy: string; ids: string[] };

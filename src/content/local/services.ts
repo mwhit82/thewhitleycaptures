@@ -64,6 +64,7 @@ export const services: Service[] = summaries.map((s, order) => ({
   title: s.title,
   order,
   description: s.description,
+  cardImage: s.image,
   hero: s.image,
   introduction: s.introduction,
   sections: [],
@@ -78,10 +79,6 @@ export const services: Service[] = summaries.map((s, order) => ({
     description: s.introduction,
     image: s.image,
   },
-  reviewNote:
-    s.id === 'baby-newborn'
-      ? undefined
-      : 'Preview for Rachel: this is a first look at the page. Full service details and final image selections are still to be reviewed.',
 }));
 Object.assign(services[0], {
   hero: i.newborn0,
@@ -175,3 +172,218 @@ Object.assign(services[1], {
     },
   ],
 });
+
+Object.assign(
+  services.find((service) => service.id === 'maternity')!,
+  {
+    packages: [
+      {
+        id: 'maternity',
+        title: 'Maternity',
+        price: 60,
+        duration: '',
+        includes: [
+          '10 digital images',
+          'Partners and family welcome at no additional cost',
+          'A choice of outfits, fabrics and backdrops',
+        ],
+      },
+    ],
+    faqs: [
+      {
+        id: 'timing',
+        question: 'When should I book?',
+        answer:
+          'I recommend booking during your second trimester, for a photo shoot in your 7th or 8th month of pregnancy.',
+      },
+    ],
+    reviewNote:
+      'Rachel: please confirm the £60 price and whether the previous newborn bundle saving still applies.',
+    pricingNote:
+      'Prices from the existing website, awaiting Rachel’s confirmation. Please confirm current pricing when you enquire.',
+  },
+);
+
+Object.assign(
+  services.find((service) => service.id === 'portraits')!,
+  {
+    sections: [
+      {
+        id: 'your-session',
+        heading: 'A photo shoot with personality.',
+        paragraphs: [
+          'My most versatile photo shoot, Portraits are available in a wide range of themes for up to two people, including birthdays.',
+          'I include some posed images, but mainly look to capture you and your little one naturally. Choose two backdrop designs, with props to suit your preferences.',
+        ],
+      },
+    ],
+    packages: [
+      {
+        id: 'portrait',
+        title: 'Portraits',
+        price: 79,
+        duration: '',
+        includes: ['10 digital images', 'Two backdrop designs'],
+        note: 'This price does not apply to cake smashes or posed newborn sessions. Floating balloons carry a surcharge; alternatives are available.',
+      },
+    ],
+    pricingNote:
+      'Prices from the existing website, awaiting Rachel’s confirmation. Please confirm current pricing when you enquire.',
+  },
+);
+
+Object.assign(
+  services.find((service) => service.id === 'family-portraits')!,
+  {
+    sections: [
+      {
+        id: 'together',
+        heading: 'Room for everyone to be themselves.',
+        paragraphs: [
+          'I include a mix of posed and relaxed, lifestyle captures, with individual portraits if you wish. I help everyone relax, play with the children and even get a little silly to bring out natural expressions.',
+          'Two backdrop setups give you a choice of styles. For your comfort, my studio accommodates up to four adults plus little ones. Larger families can be photographed at the local community centre.',
+        ],
+      },
+    ],
+    packages: [
+      {
+        id: 'family',
+        title: 'Family photo shoot',
+        price: 99,
+        duration: '',
+        includes: [
+          '10 digital images',
+          'Two backdrop setups',
+          'Individual portraits if you wish',
+        ],
+      },
+    ],
+    faqs: [
+      {
+        id: 'group',
+        question: 'Can you photograph a larger family?',
+        answer:
+          'My studio accommodates up to four adults plus little ones. Larger families can be accommodated at the local community centre; please enquire about the arrangements.',
+      },
+    ],
+    pricingNote:
+      'Prices from the existing website, awaiting Rachel’s confirmation. Please confirm current pricing when you enquire.',
+  },
+);
+
+Object.assign(
+  services.find((service) => service.id === 'on-location')!,
+  {
+    sections: [
+      {
+        id: 'outdoors',
+        heading: 'A favourite place, a different perspective.',
+        paragraphs: [
+          'I can visit your home, your favourite place or recommend seasonal beauty spots nearby for most of my packages. My editing is included, so the weather does not have to be perfect.',
+          'Locations up to 15 minutes away have no additional travel charge. Further afield in the North East, travel starts at £10, depending on the distance, in addition to your chosen package. Contact me with your location for a quote.',
+          'Location shoots are not suitable for baby or cake smash packages.',
+        ],
+      },
+    ],
+    faqs: [
+      {
+        id: 'travel',
+        question: 'How much does an on-location shoot cost?',
+        answer:
+          'The price is your chosen photography package plus any travel charge. Locations up to 15 minutes away have no additional charge; further afield in the North East, travel starts at £10. Please ask me for a quote.',
+      },
+    ],
+    reviewNote:
+      'Rachel: confirm the travel radius, £10 starting travel fee and package exclusions.',
+    pricingNote:
+      'Prices from the existing website, awaiting Rachel’s confirmation. Please confirm current pricing when you enquire.',
+  },
+);
+
+Object.assign(
+  services.find((service) => service.id === 'cake-smash-bath')!,
+  {
+    sections: [
+      {
+        id: 'celebrate',
+        heading: 'A birthday worth getting messy for.',
+        paragraphs: [
+          'Cake smashes are recommended for children up to four years old. Please get in touch to discuss older birthdays. Choose a backdrop or let me style a solid-colour backdrop around your ideas.',
+          'An 8-inch cake in your chosen colour is included, with the remaining cake yours to take home. A 6-inch cake is available for a £10 reduction.',
+          'Add a milk bath splash in one of my miniature tubs for the clean-up afterwards. Please discuss any food allergies with me when you enquire. Floating balloons carry a surcharge; alternatives are available.',
+        ],
+      },
+    ],
+    packages: [
+      {
+        id: 'smash',
+        title: 'Cake Smash',
+        price: 99,
+        duration: '',
+        includes: ['10 digital images', 'An 8-inch cake', 'Backdrop styling'],
+      },
+      {
+        id: 'smash-bath',
+        title: 'Cake Smash & Bath',
+        price: 129,
+        duration: '',
+        includes: ['13 digital images', 'An 8-inch cake', 'A milk bath splash'],
+      },
+    ],
+    reviewNote:
+      'Rachel: confirm cake sizes, the £10 smaller-cake reduction, balloon surcharge and allergy arrangements.',
+    pricingNote:
+      'Prices from the existing website, awaiting Rachel’s confirmation. Please confirm current pricing when you enquire.',
+  },
+);
+
+Object.assign(
+  services.find((service) => service.id === 'sitter')!,
+  {
+    sections: [
+      {
+        id: 'milestone',
+        heading: 'Another little milestone.',
+        paragraphs: [
+          'A Sitter photo shoot is for babies who can sit or stand with help but are not yet running around. Two themes are included, with props and outfits to choose from. You are also welcome to bring outfits for your baby.',
+          'I can photograph your little one in my Durham studio or nearby on location, depending on the weather.',
+        ],
+      },
+    ],
+    packages: [
+      {
+        id: 'sitter',
+        title: 'Sitter',
+        price: 49,
+        duration: '',
+        includes: [
+          '10 digital images',
+          'Two themes',
+          'A choice of props and outfits',
+        ],
+      },
+      {
+        id: 'sitter-family',
+        title: 'Sitter with family',
+        price: 69,
+        duration: '',
+        includes: ['10 digital images', 'Family involvement', 'Two themes'],
+      },
+    ],
+    pricingNote:
+      'Prices from the existing website, awaiting Rachel’s confirmation. Please confirm current pricing when you enquire.',
+  },
+);
+
+services.find((service) => service.id === 'family-portraits')!.testimonialIds =
+  ['family-portraits-review-1', 'family-portraits-review-2'];
+
+services.find((service) => service.id === 'on-location')!.testimonialIds = [
+  'on-location-review-1',
+  'on-location-review-2',
+];
+
+services.find((service) => service.id === 'cake-smash-bath')!.testimonialIds = [
+  'cake-smash-bath-review-1',
+  'cake-smash-bath-review-2',
+];

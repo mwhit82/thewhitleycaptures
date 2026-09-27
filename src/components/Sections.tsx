@@ -55,7 +55,7 @@ export function ServiceGrid({
           >
             <div className="service-image">
               <Photo
-                image={s.hero}
+                image={s.cardImage || s.hero}
                 sizes={
                   index === 0
                     ? '(max-width: 700px) 100vw, 60vw'

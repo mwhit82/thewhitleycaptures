@@ -1,13 +1,24 @@
+import { draftMode } from 'next/headers';
 import type { Metadata } from 'next';
 import type { Seo } from '@/content/types';
 export const isProduction = process.env.SITE_MODE === 'production';
 export const siteUrl = new URL(process.env.SITE_URL || 'http://localhost:3000');
-export function pageMetadata(seo: Seo, path: string): Metadata {
+export async function pageMetadata(
+  content: Seo,
+  path: string,
+  defaults: Seo = content,
+): Promise<Metadata> {
+  const seo = {
+    title: content?.title || defaults.title,
+    description: content?.description || defaults.description,
+    image: content?.image?.src ? content.image : defaults.image,
+  };
+  const indexable = isProduction && !(await draftMode()).isEnabled;
   return {
     title: seo.title,
     description: seo.description,
     alternates: { canonical: new URL(path, siteUrl).href },
-    robots: { index: isProduction, follow: isProduction },
+    robots: { index: indexable, follow: indexable },
     openGraph: {
       type: 'website',
       locale: 'en_GB',

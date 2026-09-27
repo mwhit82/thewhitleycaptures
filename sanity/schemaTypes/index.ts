@@ -1,6 +1,5 @@
-import type { SchemaTypeDefinition } from '@sanity/types';
-// These are ready-to-register schema definitions, not a running Studio.
-// A future adapter resolves references and image metadata into ContentProvider types.
+import type { SchemaTypeDefinition, DocumentDefinition, Rule } from 'sanity';
+// Shared by embedded Studio and the one-time content migration.
 const string = (name: string, title: string) => ({
   name,
   title,
@@ -34,20 +33,40 @@ const image = (name: string, title: string) => ({
   name,
   title,
   type: 'photograph',
+  validation: (rule: Rule) => rule.required(),
 });
 const link = (name: string, title: string) => ({
   name,
   title,
   type: 'contentLink',
+  validation: (rule: Rule) => rule.required(),
 });
 export const schemaTypes: SchemaTypeDefinition[] = [
   {
     name: 'photograph',
     title: 'Photograph',
     type: 'image',
+    preview: {
+      select: { title: 'alt', subtitle: 'caption', media: 'asset' },
+      prepare({ title, subtitle, media }) {
+        return {
+          title: title || 'Photograph — add a description',
+          subtitle,
+          media,
+        };
+      },
+    },
     options: { hotspot: true },
     fields: [
-      string('alt', 'Image description'),
+      {
+        ...string('alt', 'Image description'),
+        description:
+          'A short description for people who cannot see the photo. Describe the moment, without identifying children.',
+        validation: (rule: Rule) =>
+          rule
+            .required()
+            .warning('Add a description to make this photograph accessible.'),
+      },
       string('caption', 'Optional caption'),
     ],
     description:
@@ -57,7 +76,23 @@ export const schemaTypes: SchemaTypeDefinition[] = [
     name: 'contentLink',
     title: 'Link',
     type: 'object',
-    fields: [string('label', 'Link text'), string('href', 'Destination')],
+    preview: { select: { title: 'label', subtitle: 'href' } },
+    fields: [
+      string('label', 'Link text'),
+      {
+        ...string('href', 'Destination'),
+        description: 'Use /#enquire, a page path, or a full https:// link.',
+        validation: (rule: Rule) =>
+          rule
+            .required()
+            .custom((value) =>
+              typeof value === 'string' &&
+              /^(#|\/(?!\/)|https:\/\/|mailto:)/.test(value)
+                ? true
+                : 'Use an anchor (#enquire), site path, https:// URL or mailto: link.',
+            ),
+      },
+    ],
   },
   {
     name: 'seo',
@@ -87,9 +122,23 @@ export const schemaTypes: SchemaTypeDefinition[] = [
     name: 'package',
     title: 'Photo shoot package',
     type: 'object',
+    preview: {
+      select: { title: 'title', price: 'price' },
+      prepare({ title, price }) {
+        return {
+          title: title || 'New package',
+          subtitle: typeof price === 'number' ? `£${price}` : 'Add a price',
+        };
+      },
+    },
     fields: [
       string('title', 'Package name'),
-      { name: 'price', title: 'Price (£)', type: 'number' },
+      {
+        name: 'price',
+        title: 'Price (£)',
+        type: 'number',
+        validation: (rule: Rule) => rule.required().min(0).precision(2),
+      },
       string('duration', 'Time to allow'),
       strings('includes', 'What’s included'),
       text('note', 'Additional information'),
@@ -99,16 +148,30 @@ export const schemaTypes: SchemaTypeDefinition[] = [
     name: 'faq',
     title: 'Question & answer',
     type: 'object',
+    preview: { select: { title: 'question', subtitle: 'answer' } },
     fields: [string('question', 'Question'), text('answer', 'Answer')],
   },
   {
     name: 'siteSettings',
     title: 'Site settings',
     type: 'document',
+    preview: {
+      select: { name: 'name', media: 'logo' },
+      prepare({ name, media }) {
+        return {
+          title: 'Site settings',
+          subtitle: name || 'Contact details, navigation and branding',
+          media,
+        };
+      },
+    },
     fields: [
       string('name', 'Business name'),
       image('logo', 'Logo'),
-      string('email', 'Email address'),
+      {
+        ...string('email', 'Email address'),
+        validation: (rule: Rule) => rule.required().email(),
+      },
       string('location', 'Studio location'),
       string('areaServed', 'Area covered'),
       {
@@ -123,7 +186,17 @@ export const schemaTypes: SchemaTypeDefinition[] = [
         type: 'array',
         of: [{ type: 'contentLink' }],
       },
-      string('privacyUrl', 'Privacy policy link'),
+      {
+        ...string('privacyUrl', 'Privacy policy link'),
+        validation: (rule: Rule) =>
+          rule
+            .required()
+            .custom((value) =>
+              typeof value === 'string' && /^(\/(?!\/)|https:\/\/)/.test(value)
+                ? true
+                : 'Use a page path or full https:// address.',
+            ),
+      },
       { name: 'seo', title: 'Default search & sharing', type: 'seo' },
     ],
   },
@@ -131,6 +204,16 @@ export const schemaTypes: SchemaTypeDefinition[] = [
     name: 'homepage',
     title: 'Homepage',
     type: 'document',
+    preview: {
+      select: { media: 'hero.image' },
+      prepare({ media }) {
+        return {
+          title: 'Homepage',
+          subtitle: 'Your opening photograph, introduction and page sections',
+          media,
+        };
+      },
+    },
     fields: [
       {
         name: 'hero',
@@ -144,6 +227,9 @@ export const schemaTypes: SchemaTypeDefinition[] = [
           image('image', 'Main photograph'),
           link('cta', 'Main link'),
           link('secondaryCta', 'Second link'),
+          string('footnote', 'Small footer line'),
+          string('motto', 'Short motto'),
+          string('photoCaption', 'Photograph caption'),
         ],
       },
       {
@@ -161,6 +247,7 @@ export const schemaTypes: SchemaTypeDefinition[] = [
           },
           image('image', 'Portrait'),
           string('signature', 'Sign-off'),
+          string('imageCaption', 'Portrait caption'),
         ],
       },
       {
@@ -230,9 +317,14 @@ export const schemaTypes: SchemaTypeDefinition[] = [
         title: 'Page address',
         type: 'slug',
         options: { source: 'title' },
+        readOnly: ({ document }) => Boolean(document?._createdAt),
+        description:
+          'Keep existing page addresses unchanged to preserve links. Ask Mark before changing this.',
+        validation: (rule: Rule) => rule.required(),
       },
       { name: 'order', title: 'Navigation order', type: 'number' },
       text('description', 'Short introduction'),
+      image('cardImage', 'Homepage card photograph'),
       image('hero', 'Main photograph'),
       text('introduction', 'Introduction'),
       {
@@ -259,14 +351,26 @@ export const schemaTypes: SchemaTypeDefinition[] = [
       },
       link('cta', 'Enquiry link'),
       { name: 'seo', title: 'Search & sharing', type: 'seo' },
-      text('reviewNote', 'Temporary review note'),
+      {
+        ...text('reviewNote', 'Review reminder'),
+        description:
+          'Shown on staging only. Remove once you have checked the content.',
+      },
     ],
-    preview: { select: { title: 'title', media: 'hero' } },
+    preview: { select: { title: 'title', media: 'cardImage' } },
+    orderings: [
+      {
+        title: 'Navigation order',
+        name: 'navigation',
+        by: [{ field: 'order', direction: 'asc' }],
+      },
+    ],
   },
   {
     name: 'gallery',
     title: 'Gallery',
     type: 'document',
+    preview: { select: { title: 'title', media: 'images.0' } },
     fields: [
       string('title', 'Gallery name'),
       {
@@ -280,7 +384,9 @@ export const schemaTypes: SchemaTypeDefinition[] = [
       },
       {
         name: 'featuredImages',
-        title: 'Featured photographs',
+        title: 'Legacy featured selection',
+        hidden: true,
+        readOnly: true,
         type: 'array',
         of: [{ type: 'photograph' }],
         options: { layout: 'grid' },
@@ -296,8 +402,132 @@ export const schemaTypes: SchemaTypeDefinition[] = [
     fields: [
       text('quote', 'Customer’s words'),
       string('name', 'Customer name'),
-      ref('service', 'Related service (optional)', 'photographyService'),
+      refs('services', 'Related photography services', 'photographyService'),
+      {
+        name: 'featured',
+        title: 'Favourite for future use',
+        type: 'boolean',
+        description:
+          'A library marker only. Choose testimonials on Homepage or a service to display them.',
+      },
+      {
+        name: 'order',
+        title: 'Library order',
+        type: 'number',
+        description:
+          'For sorting this library. Website order follows the selections on each page.',
+      },
     ],
     preview: { select: { title: 'name', subtitle: 'quote' } },
+    orderings: [
+      {
+        title: 'Library order',
+        name: 'libraryOrder',
+        by: [{ field: 'order', direction: 'asc' }],
+      },
+    ],
   },
 ];
+
+// Keep essential page structure intact when publishing, while allowing optional sections.
+const requiredFields: Record<string, string[]> = {
+  siteSettings: [
+    'name',
+    'logo',
+    'email',
+    'location',
+    'areaServed',
+    'navigation',
+    'privacyUrl',
+    'seo',
+  ],
+  homepage: [
+    'hero',
+    'introduction',
+    'enquiry',
+    'services',
+    'testimonials',
+    'cta',
+  ],
+  photographyService: [
+    'title',
+    'slug',
+    'hero',
+    'cardImage',
+    'introduction',
+    'cta',
+    'gallery',
+  ],
+  testimonial: ['name', 'quote'],
+  gallery: ['title'],
+  contentLink: ['label', 'href'],
+  seo: ['title', 'description'],
+  package: ['title', 'price', 'includes'],
+  faq: ['question', 'answer'],
+};
+for (const schema of schemaTypes) {
+  if ('fields' in schema && Array.isArray(schema.fields)) {
+    for (const field of schema.fields) {
+      if (
+        requiredFields[schema.name]?.includes(field.name) &&
+        !field.validation
+      )
+        field.validation = (rule: Rule) => rule.required();
+    }
+  }
+}
+
+const homepageRequired: Record<string, string[]> = {
+  hero: ['heading', 'copy', 'image', 'cta', 'secondaryCta'],
+  introduction: ['heading', 'paragraphs', 'image'],
+  enquiry: ['heading', 'copy'],
+  services: ['heading', 'items'],
+  testimonials: ['heading'],
+  cta: ['heading', 'link'],
+};
+for (const schema of schemaTypes) {
+  if (
+    schema.name === 'homepage' &&
+    'fields' in schema &&
+    Array.isArray(schema.fields)
+  ) {
+    for (const section of schema.fields) {
+      if ('fields' in section && Array.isArray(section.fields)) {
+        for (const field of section.fields) {
+          if (
+            homepageRequired[section.name]?.includes(field.name) &&
+            !field.validation
+          )
+            field.validation = (rule: Rule) => rule.required();
+        }
+      }
+    }
+  }
+}
+
+const serviceGroups: Record<string, string[]> = {
+  overview: ['title', 'description', 'introduction', 'sections', 'cta'],
+  photographs: ['cardImage', 'hero', 'gallery'],
+  pricing: ['packages', 'pricingNote', 'included', 'faqs'],
+  kindWords: ['testimonials'],
+  sharing: ['seo'],
+  settings: ['slug', 'order', 'reviewNote'],
+};
+const serviceSchema = schemaTypes.find(
+  (schema): schema is DocumentDefinition =>
+    schema.name === 'photographyService' && schema.type === 'document',
+);
+if (serviceSchema?.type === 'document') {
+  serviceSchema.groups = [
+    { name: 'overview', title: 'Page copy', default: true },
+    { name: 'photographs', title: 'Photographs' },
+    { name: 'pricing', title: 'Prices & questions' },
+    { name: 'kindWords', title: 'Kind words' },
+    { name: 'sharing', title: 'Search & sharing' },
+    { name: 'settings', title: 'Page settings' },
+  ];
+  for (const field of serviceSchema.fields)
+    field.group = Object.keys(serviceGroups).find((group) =>
+      serviceGroups[group].includes(field.name),
+    );
+}

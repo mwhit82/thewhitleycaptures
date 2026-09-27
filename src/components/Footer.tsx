@@ -1,19 +1,12 @@
 import Link from 'next/link';
-import Image from 'next/image';
+import { Photo } from './Photo';
 import type { SiteSettings } from '@/content/types';
 export function Footer({ settings }: { settings: SiteSettings }) {
   return (
     <footer className="footer">
       <div className="container footer-main">
         <Link href="/" aria-label="The Whitley Captures home">
-          <Image
-            src={settings.logo.src}
-            alt={settings.logo.alt}
-            width={settings.logo.width}
-            height={settings.logo.height}
-            sizes="160px"
-            className="footer-logo"
-          />
+          <Photo image={settings.logo} sizes="160px" className="footer-logo" />
         </Link>
         <div>
           <p className="eyebrow">A LITTLE STUDIO. A LOT OF HEART.</p>

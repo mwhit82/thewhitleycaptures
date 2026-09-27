@@ -7,10 +7,24 @@ const config: NextConfig = {
     .flat()
     .filter((entry) => entry?.family === 'IPv4')
     .map((entry) => entry!.address),
-  images: { formats: ['image/avif', 'image/webp'] },
+  images: {
+    formats: ['image/avif', 'image/webp'],
+    remotePatterns: [
+      { protocol: 'https', hostname: 'cdn.sanity.io', pathname: '/images/**' },
+    ],
+  },
   async headers() {
     return process.env.SITE_MODE === 'production'
-      ? []
+      ? [
+          {
+            source: '/studio/:path*',
+            headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow' }],
+          },
+          {
+            source: '/api/:path*',
+            headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow' }],
+          },
+        ]
       : [
           {
             source: '/:path*',

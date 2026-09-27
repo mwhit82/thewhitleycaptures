@@ -10,7 +10,11 @@ import {
 import { Gallery } from '@/components/Gallery';
 import { pageMetadata, jsonLd, siteUrl } from '@/lib/seo';
 export async function generateMetadata() {
-  return pageMetadata((await getHomepage()).seo, '/');
+  const [home, settings] = await Promise.all([
+    getHomepage(),
+    getSiteSettings(),
+  ]);
+  return pageMetadata(home.seo, '/', settings.seo);
 }
 export default async function Home() {
   const [home, settings] = await Promise.all([
@@ -37,7 +41,9 @@ export default async function Home() {
               addressCountry: 'GB',
             },
             sameAs: settings.socials.map((s) => s.href),
-            image: new URL(home.hero.image.src, siteUrl).href,
+            image: home.hero.image?.src
+              ? new URL(home.hero.image.src, siteUrl).href
+              : undefined,
           }),
         }}
       />
@@ -61,9 +67,9 @@ export default async function Home() {
             </Link>
           </div>
           <p className="hero-footnote">
-            STUDIO & LOCATION PHOTOGRAPHY
+            {home.hero.footnote}
             <br />
-            <span>Made personal. Kept forever.</span>
+            <span>{home.hero.motto}</span>
           </p>
         </div>
         <div className="hero-photo">
@@ -73,8 +79,8 @@ export default async function Home() {
             sizes="(max-width: 700px) 100vw, 60vw"
           />
           <div className="photo-caption">
-            <span>THE WHITLEY CAPTURES</span>
-            <span>A little of life, held still.</span>
+            <span>{settings.name.toUpperCase()}</span>
+            <span>{home.hero.photoCaption}</span>
           </div>
         </div>
       </section>
@@ -84,7 +90,9 @@ export default async function Home() {
             image={home.introduction.image}
             sizes="(max-width: 700px) 70vw, 30vw"
           />
-          <span className="intro-caption">THE FACE BEHIND THE CAMERA</span>
+          <span className="intro-caption">
+            {home.introduction.imageCaption}
+          </span>
         </div>
         <div className="intro-copy">
           <p className="eyebrow">{home.introduction.eyebrow}</p>
@@ -97,21 +105,25 @@ export default async function Home() {
       </section>
       <Enquiry content={home.enquiry} email={settings.email} />
       <ServiceGrid content={home.services} services={home.services.items} />
-      <section className="featured-section section">
-        <div className="container">
-          <div className="section-heading">
-            <div>
-              <p className="eyebrow">{home.featured.eyebrow}</p>
-              <h2>{home.featured.heading}</h2>
+      {home.featured?.gallery?.images.length > 0 && (
+        <section className="featured-section section">
+          <div className="container">
+            <div className="section-heading">
+              <div>
+                <p className="eyebrow">{home.featured.eyebrow}</p>
+                <h2>{home.featured.heading}</h2>
+              </div>
+              {home.featured.cta?.href && (
+                <Link className="text-link" href={home.featured.cta.href}>
+                  {home.featured.cta.label}
+                  <span aria-hidden="true">↗</span>
+                </Link>
+              )}
             </div>
-            <Link className="text-link" href={home.featured.cta.href}>
-              {home.featured.cta.label}
-              <span aria-hidden="true">↗</span>
-            </Link>
+            <Gallery gallery={home.featured.gallery} />
           </div>
-          <Gallery gallery={home.featured.gallery} />
-        </div>
-      </section>
+        </section>
+      )}
       <Testimonials
         items={home.testimonials.items}
         heading={home.testimonials.heading}

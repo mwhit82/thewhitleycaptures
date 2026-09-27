@@ -1359,3 +1359,127 @@ img {
 .session-form[data-state='error'] .session-mount {
   min-height: 0;
 }
+
+/* Gallery: native modal focus containment, Escape and return-to-trigger focus. */
+.gallery-open {
+  position: relative;
+  display: block;
+  padding: 0;
+  width: 100%;
+  border: 0;
+  background: transparent;
+  cursor: zoom-in;
+  text-align: left;
+}
+.gallery-zoom {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  padding: 8px 12px;
+  background: rgba(255, 253, 248, 0.94);
+  color: #302c28;
+  font-size: 11px;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.gallery-open:hover .gallery-zoom,
+.gallery-open:focus-visible .gallery-zoom {
+  opacity: 1;
+}
+.lightbox {
+  padding: 0;
+  border: 0;
+  width: min(1100px, 96vw);
+  max-width: 96vw;
+  max-height: 96dvh;
+  color: #fff;
+  background: #201e1b;
+}
+.lightbox::backdrop {
+  background: rgba(20, 18, 16, 0.9);
+}
+.lightbox-content {
+  padding: 12px;
+}
+.lightbox-content > img {
+  display: block;
+  width: 100%;
+  height: 75dvh;
+  object-fit: contain;
+}
+.lightbox button {
+  min-height: 44px;
+  padding: 10px 14px;
+  border: 1px solid #938c80;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+.lightbox button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+.lightbox-close {
+  display: block;
+  margin-left: auto;
+  margin-bottom: 8px;
+}
+.lightbox-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.lightbox-controls p {
+  font-size: 12px;
+  text-align: center;
+}
+.draft-banner {
+  padding: 12px 20px;
+  background: #efe5cf;
+  color: #302c28;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  font-size: 13px;
+}
+.draft-banner button,
+.analytics-choice button {
+  padding: 10px 14px;
+  border: 1px solid currentColor;
+  background: transparent;
+  cursor: pointer;
+  min-height: 44px;
+}
+.analytics-choice {
+  padding: 16px;
+  text-align: center;
+  font-size: 12px;
+}
+.analytics-choice button {
+  margin: 4px;
+}
+@media (max-width: 600px) {
+  .lightbox-content > img {
+    height: 65dvh;
+  }
+  .lightbox-controls {
+    gap: 5px;
+  }
+  .lightbox button {
+    padding: 10px;
+    font-size: 12px;
+  }
+}
+
+body:has(.lightbox[open]) {
+  overflow: hidden;
+}
+
+.photo-placeholder {
+  min-height: 160px;
+  background: #e8e4dc;
+  aspect-ratio: 3/2;
+}

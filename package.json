@@ -10,7 +10,11 @@
     "typecheck": "next typegen && tsc --noEmit",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "test": "playwright test"
+    "test": "playwright test",
+    "cms:seed": "node --import tsx scripts/seed-sanity.ts",
+    "cms:seed:login": "sanity exec scripts/seed-sanity.ts --with-user-token -- --apply",
+    "check:launch": "node --import tsx scripts/check-launch.ts",
+    "postinstall": "patch-package --error-on-fail"
   },
   "engines": {
     "node": ">=22.13.0"
@@ -18,10 +22,16 @@
   "dependencies": {
     "@fontsource/cormorant-garamond": "^5.3.0",
     "@fontsource/manrope": "^5.3.0",
+    "@sanity/client": "^8.7.0",
+    "@sanity/image-url": "^2.1.1",
     "next": "^16.3.6",
+    "next-sanity": "^13.3.4",
+    "patch-package": "8.0.1",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
-    "server-only": "^0.0.1"
+    "sanity": "^6.16.0",
+    "server-only": "^0.0.1",
+    "styled-components": "^6.5.3"
   },
   "devDependencies": {
     "@playwright/test": "^1.63.0",
@@ -30,10 +40,26 @@
     "@types/node": "^26.6.3",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
+    "esbuild": "^0.28.2",
     "eslint": "^9.39.5",
     "eslint-config-next": "^16.3.6",
+    "groq-js": "^2.0.0",
     "prettier": "^3.9.9",
     "tailwindcss": "^4.3.3",
+    "tsx": "^4.23.15",
     "typescript": "^6.0.3"
+  },
+  "overrides": {
+    "@module-federation/dts-plugin": {
+      "adm-zip": "^0.6.1"
+    },
+    "@vercel/frameworks": {
+      "js-yaml": "^3.15.2",
+      "smol-toml": "^1.7.1"
+    },
+    "typeid-js": {
+      "uuid": "^11.1.1"
+    },
+    "react-i18next": "17.0.15"
   }
 }

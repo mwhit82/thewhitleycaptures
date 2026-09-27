@@ -11,6 +11,9 @@ export const homepage: Homepage = {
     image: images.location,
     cta: { label: 'Check availability', href: '#enquire' },
     secondaryCta: { label: 'Find your photo shoot', href: '#photography' },
+    footnote: 'STUDIO & LOCATION PHOTOGRAPHY',
+    motto: 'Made personal. Kept forever.',
+    photoCaption: 'A little of life, held still.',
   },
   introduction: {
     eyebrow: 'A LITTLE ABOUT ME',
@@ -21,6 +24,7 @@ export const homepage: Homepage = {
     ],
     image: images.rachel,
     signature: 'Rachel x',
+    imageCaption: 'THE FACE BEHIND THE CAMERA',
   },
   enquiry: {
     eyebrow: 'LET’S MAKE SOME MEMORIES',

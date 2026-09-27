@@ -1,6 +1,6 @@
 'use client';
 import Link from 'next/link';
-import Image from 'next/image';
+import { Photo } from './Photo';
 import { useRef, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import type { Link as ContentLink, ContentImage } from '@/content/types';
@@ -37,14 +37,7 @@ export function Header({
           onClick={close}
           className="brand"
         >
-          <Image
-            src={logo.src}
-            alt={logo.alt}
-            width={logo.width}
-            height={logo.height}
-            sizes="124px"
-            className="brand-logo"
-          />
+          <Photo image={logo} sizes="124px" className="brand-logo" />
         </Link>
         <nav className="desktop-nav" aria-label="Main navigation">
           {navigation.map((n) => (

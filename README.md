@@ -1,71 +1,70 @@
 # The Whitley Captures
 
-A local review prototype for Rachel’s family photography website. Next.js App Router, TypeScript and Tailwind CSS. The live Webflow website and production domain are untouched.
+Rachel’s approved replacement website: Next.js App Router, TypeScript, Tailwind and an embedded Sanity Studio. Webflow, DNS and the production domain remain untouched. Initial content is imported into Sanity and published-content rendering is verified. Authenticated draft-preview checks still require a local Viewer token.
 
-## Run locally
+## Local review
 
-Use Node.js 22.13+ (Node 24 recommended) and npm.
+Node.js 22.13+ (24 recommended):
 
 ```sh
 npm ci
 npm run dev
 ```
 
-Open [localhost:3000](http://localhost:3000). **No `.env`, Sanity credentials, database, CMS account or hosting account is required.** The site’s content, fonts and photographs are local. The real Session form needs internet access; if blocked, it shows an email fallback. Initial dependency installation needs internet access.
+Open http://localhost:3000. With no environment file, the site runs from isolated local fixtures. The real Session form needs internet access and provides an email fallback. No hosting account is required.
 
-For a phone on the same trusted Wi-Fi, open `http://YOUR-COMPUTER-LAN-IP:3000`. Leave the development server running and allow the OS network prompt if needed. Next.js automatically allows the computer’s own IPv4 addresses for development resources; restart the server if your Wi-Fi address changes. The development server binds to `0.0.0.0`; do not forward the port onto the public internet. A remotely shareable review URL is not deployed. For a more representative local performance check, stop the dev server, run `npm run build`, then `npm start`.
+For a phone on the same trusted Wi-Fi, use `http://YOUR-COMPUTER-LAN-IP:3000` and keep the server running. Restart it if the computer’s address changes. A remote review URL is not deployed. Search directives are not access control; a future remote staging site needs hosting authentication.
 
-## What to review
+## Real Sanity content
 
-- Homepage visual direction, seven service cards and mobile navigation.
-- Enquiry form immediately after Rachel’s introduction; header and hero jump directly to it.
-- `/prices/baby-newborn`: full sample service page, packages, gallery, questions and testimonials.
-- Six lightweight local service previews, including existing maternity content.
-- Existing prices are labelled for Rachel to confirm. Preview notes are deliberate and must be resolved before launch.
+Copy `.env.example` to `.env.local`. Project: `4d7wgp7e`; dataset: `production`. Add the exact local origin to Sanity CORS with credentials allowed, then follow [CMS-GUIDE.md](docs/CMS-GUIDE.md) for login, import and preview setup.
 
-## Content architecture
+```sh
+npm run cms:seed                 # Validate references and queries; no writes
+npm run cms:seed -- --apply      # Requires local Editor token
+# Or, after npx sanity login:
+npm run cms:seed:login
+```
 
-All business content lives in `src/content/local`: `settings.ts`, `homepage.ts`, `services.ts`, `galleries.ts`, `testimonials.ts`, `images.json`. Stable IDs and ordered references connect the documents. Local photos are in `public/images`; source provenance is in `docs/asset-sources.json`. Do not delete an image without updating its content references.
+The import creates missing documents and uploads curated images. Existing document IDs are never overwritten. Remove the temporary write token afterwards. Set `CONTENT_SOURCE=sanity` and restart to use the real dataset. Published reads are public and cached for up to 60 seconds; draft reads require `SANITY_API_READ_TOKEN` and authenticated Studio preview entry.
 
-Pages use only the server-only `src/content/index.ts` interface:
+`CONTENT_SOURCE=local` explicitly selects the offline fallback. Sanity mode never silently substitutes stale fixtures for missing CMS content. `/studio` is isolated from public page styles and content requests. Its JavaScript is not included in ordinary page bundles.
 
-- `getSiteSettings()`
-- `getHomepage()` (resolves ordered service, gallery and testimonial references)
-- `getServices()`
-- `getServiceBySlug(slug)` (returns `null` for unknown services)
+The homepage, seven services, galleries, testimonials and settings share the server-only `ContentProvider` interface. `src/content/sanity` contains queries and image resolution; `src/content/local` is offline fallback and initial migration input only. Components never import fixtures directly. Source photography provenance is in `docs/asset-sources.json`.
 
-A future Sanity adapter implements `ContentProvider` from `src/content/types.ts`; the UI does not need to change. `sanity/schemaTypes/index.ts` contains typed, dependency-light schema definitions ready to register in a future Studio. There is no running Studio or fake preview/publish workflow. See [CMS guide](docs/CMS-GUIDE.md) for the transition.
+## Review and editing
+
+All seven existing service paths are retained. Prices are carried over from verified source content and await Rachel’s confirmation. Galleries support arrow keys, Escape, modal focus containment and returning focus to the selected photograph. Sanity images use responsive CDN widths, modern formats, stored crops and focal points.
+
+Rachel’s editing instructions are in [CMS-GUIDE.md](docs/CMS-GUIDE.md), with outstanding copy, prices and photo selections in [CONTENT-REVIEW.md](docs/CONTENT-REVIEW.md). Preview is a simple save-draft → refresh-preview → publish workflow. The original Webflow website is unaffected by publishing into this replacement’s dataset.
 
 ## Session
 
-`SessionInquiryForm` uses the supplied `0Ll72MoGY` link unchanged. It loads the vendor script once when the form approaches the viewport and observes the inserted iframe for load/error feedback. A single vendor-owned mount is reused across navigation because Session has no public unmount API. The outer iframe is bounded to 60rem to contain a verified vendor resize issue; native iframe scrolling remains available, and no internal form styles are changed. It is a Client Component; other content is server rendered. Styles are applied around the cross-origin iframe. Session owns validation, submission, confirmation and lead management. No requests are sent to a custom backend.
+`SessionInquiryForm` retains identifier `0Ll72MoGY`. One shared script loads as the form approaches the viewport; its vendor-owned mount survives client navigation and React remounts. The outer iframe is bounded to 60rem to contain a verified vendor resize issue while retaining native scrolling. No iframe internals or submission behaviour are modified, and no custom enquiry backend exists.
 
-The real form is live: submitting it contacts Rachel. Automated tests mock or inspect the form and never submit an enquiry. A successful submission/receipt test still requires explicit authorisation.
+Automated tests never submit a lead. An end-to-end submission and receipt check requires Rachel or explicit authorisation.
 
-## Checks
+## Verification
 
 ```sh
 npm run typecheck
 npm run lint
 npm run format:check
 npm run build
+npx sanity schema validate
 npx playwright install chromium
 npm test
-# Optional read-only real Session loading/navigation check (requires internet):
 LIVE_SESSION=1 npm test -- tests/session-live.spec.ts
 ```
 
-Tests reuse the local dev server on port 3000, or start one if it is not running. They check service routing, mobile navigation, preview SEO controls, fixture references, Session script failure and remount behaviour without sending leads. Browser installation is needed once on a new developer machine.
+Tests use the local server on port 3000 or start it when absent. They cover routes, metadata, preview indexing controls, mobile navigation, galleries, image crops, Session failure and repeat navigation. A successful local test does not prove authenticated Sanity publish/preview until credentials are configured. See [VERIFICATION.md](docs/VERIFICATION.md).
 
-## Preview safety
+## Staging and eventual launch
 
-The default `SITE_MODE=preview` adds `noindex, nofollow` to metadata and response headers. `robots.txt` disallows crawling; `/sitemap.xml` returns 404. The optional `SITE_URL` controls canonical and social URL origins, defaulting to localhost. Local links cannot be previewed by Facebook’s external scraper.
+Default `SITE_MODE=preview`: HTML and response headers specify `noindex, nofollow`; robots disallows crawling and sitemap returns 404. `SITE_URL` controls canonical/social origins. Studio and API remain noindex even in production; draft metadata also remains noindex.
 
-Only a separate approved migration should enable `SITE_MODE=production`. Search directives are not authentication; protect a future remote staging deployment. No DNS, Webflow or hosting configuration is changed by this project.
+Only a separately approved migration enables `SITE_MODE=production`. Run `npm run check:launch` to catch preview mode, an unsuitable origin or the wrong content source before that migration. Complete the [URL mapping, launch and rollback checklist](docs/MIGRATION.md) first. No production redirects have been enabled.
 
-## Documentation
+Optional analytics uses `NEXT_PUBLIC_GA_MEASUREMENT_ID` and loads only after visitor consent. Leave it empty on staging. Do not commit real tokens or `.env.local`.
 
-- [Migration/content/SEO audit](docs/MIGRATION.md)
-- [Source audit evidence](docs/source-audit.json)
-- [CMS guide and transition](docs/CMS-GUIDE.md)
-- [Verification results](docs/VERIFICATION.md)
+Security overrides in package.json update vulnerable Sanity CLI transitive dependencies without downgrading Studio. The current lockfile audits clean; retest these overrides when upgrading Sanity.

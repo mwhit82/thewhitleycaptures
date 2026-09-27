@@ -1,0 +1,19 @@
+{
+  "date": "2026-09-27",
+  "mode": "local fallback; production build; mobile Lighthouse",
+  "scores": {
+    "performance": 0.92,
+    "accessibility": 1,
+    "best-practices": 1,
+    "seo": 0.69,
+    "agentic-browsing": 1
+  },
+  "metrics": {
+    "first-contentful-paint": "1.5\u00a0s",
+    "largest-contentful-paint": "3.3\u00a0s",
+    "total-blocking-time": "0\u00a0ms",
+    "cumulative-layout-shift": "0.001",
+    "speed-index": "1.8\u00a0s"
+  },
+  "limitation": "Sanity CDN delivery and authenticated Studio/publish/preview remain unverified until credentials and CORS are configured. SEO score intentionally affected by staging noindex."
+}

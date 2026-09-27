@@ -1,26 +1,30 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { getServiceBySlug, getServices, getHomepage } from '@/content';
+import { getServiceBySlug, getHomepage, getSiteSettings } from '@/content';
 import { Photo } from '@/components/Photo';
 import { Gallery } from '@/components/Gallery';
 import { Testimonials, FinalCta } from '@/components/Sections';
-import { pageMetadata, jsonLd, siteUrl } from '@/lib/seo';
+import { pageMetadata, jsonLd, siteUrl, isProduction } from '@/lib/seo';
 type Props = { params: Promise<{ slug: string }> };
-export async function generateStaticParams() {
-  return (await getServices()).map((s) => ({ slug: s.slug }));
-}
 export async function generateMetadata({ params }: Props) {
   const { slug } = await params;
   const service = await getServiceBySlug(slug);
   return service
-    ? pageMetadata(service.seo, `/prices/${service.slug}`)
+    ? pageMetadata(
+        service.seo,
+        `/prices/${service.slug}`,
+        (await getSiteSettings()).seo,
+      )
     : { title: 'Page not found' };
 }
 export default async function ServicePage({ params }: Props) {
   const { slug } = await params;
   const service = await getServiceBySlug(slug);
   if (!service) notFound();
-  const home = await getHomepage();
+  const [home, settings] = await Promise.all([
+    getHomepage(),
+    getSiteSettings(),
+  ]);
   return (
     <main id="main">
       <script
@@ -35,9 +39,32 @@ export default async function ServicePage({ params }: Props) {
             provider: {
               '@type': 'ProfessionalService',
               '@id': new URL('/#business', siteUrl).href,
-              name: 'The Whitley Captures',
+              name: settings.name,
             },
-            areaServed: 'North East England',
+            areaServed: settings.areaServed,
+          }),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: jsonLd({
+            '@context': 'https://schema.org',
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+              {
+                '@type': 'ListItem',
+                position: 1,
+                name: 'Home',
+                item: siteUrl.href,
+              },
+              {
+                '@type': 'ListItem',
+                position: 2,
+                name: service.title,
+                item: new URL(`/prices/${service.slug}`, siteUrl).href,
+              },
+            ],
           }),
         }}
       />
@@ -63,7 +90,7 @@ export default async function ServicePage({ params }: Props) {
           />
         </div>
       </section>
-      {service.reviewNote && (
+      {service.reviewNote && !isProduction && (
         <aside className="review-note container">{service.reviewNote}</aside>
       )}
       {service.sections.length > 0 && (
@@ -80,35 +107,36 @@ export default async function ServicePage({ params }: Props) {
           ))}
         </section>
       )}
-      <section className="section container service-gallery">
-        <div className="section-heading">
-          <div>
-            <p className="eyebrow">A FEW FAVOURITE CAPTURES</p>
-            <h2>{service.gallery.title}</h2>
+      {service.gallery?.images.length > 0 && (
+        <section className="section container service-gallery">
+          <div className="section-heading">
+            <div>
+              <p className="eyebrow">A FEW FAVOURITE CAPTURES</p>
+              <h2>{service.gallery.title}</h2>
+            </div>
+            <span className="gallery-count">
+              {String(service.gallery.images.length).padStart(2, '0')}{' '}
+              PHOTOGRAPHS
+            </span>
           </div>
-          <span className="gallery-count">
-            {String(service.gallery.images.length).padStart(2, '0')} PHOTOGRAPHS
-          </span>
-        </div>
-        <Gallery gallery={service.gallery} />
-      </section>
+          <Gallery gallery={service.gallery} />
+        </section>
+      )}
       {service.packages.length > 0 && (
         <section className="packages-section section">
           <div className="container">
             <div className="center-heading">
               <p className="eyebrow">YOUR PHOTO SHOOT</p>
               <h2>A little something to treasure.</h2>
-              <p>
-                I offer three levels of package, depending on your time and
-                budget.
-              </p>
+              <p>Choose the photo shoot that suits you.</p>
             </div>
             <p className="review-note">{service.pricingNote}</p>
             <div className="packages">
               {service.packages.map((p, index) => (
                 <article key={p.id}>
                   <p className="eyebrow">
-                    0{index + 1} / {p.duration}
+                    0{index + 1}
+                    {p.duration ? ` / ${p.duration}` : ''}
                   </p>
                   <h3>{p.title}</h3>
                   <p className="package-price">£{p.price}</p>
@@ -154,7 +182,7 @@ export default async function ServicePage({ params }: Props) {
       )}
       <Testimonials
         items={service.testimonials}
-        heading="Little ones. Lovely words."
+        heading="Lovely words, lasting memories."
       />
       <FinalCta content={home.cta} />
     </main>

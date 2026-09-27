@@ -45,3 +45,37 @@ Session now starts loading when the form is within 300px of the viewport. Before
 - Local preview is not remotely hosted. `noindex` is not authentication. Any future remote private preview needs access protection.
 - Prices are carried over for review. Six service pages are deliberately lightweight, and the remaining old URLs are inventoried rather than migrated or redirected.
 - No privacy/legal approval, ranking assurance, analytics audit or final migration decision is implied by this prototype.
+
+## Sanity integration milestone — 27 September 2026
+
+Implemented and verified locally; **external activation is pending**, so this is not a claim that Rachel can already publish to the replacement.
+
+- Type checking, ESLint, formatting, production build and Git whitespace checks passed.
+- Sanity schema validation: zero errors and zero warnings.
+- Migration dry run: 28 documents / 17 unique curated image files; stable references and the actual frontend GROQ projections pass preflight. No Sanity writes were made.
+- Public dataset read returned 0 documents. No CLI login, Editor token or Viewer token was available. Studio renders its expected “Connect this Studio to your project” CORS screen at `/studio`.
+- 15 browser checks passed, covering all page routes, preview metadata/headers, invalid preview entry, image crop resolution, keyboard lightbox focus/Escape/arrow keys, mobile menu, no horizontal overflow at 320/360/390/430/768/1440 widths, and Session failure/repeat navigation.
+- Real Session loaded after navigation with one iframe and a bounded 960px height; no enquiry was submitted.
+- Mobile Lighthouse on the production build in local fallback mode: Performance 92, Accessibility 100, Best Practices 100; LCP 3.3s, CLS 0.001. See cms-performance-summary.json. This is a lab result; image delivery needs another measurement after real Sanity seeding, and field Core Web Vitals cannot yet be claimed. SEO is intentionally reduced by preview indexing restrictions.
+- Dependency audit reports zero vulnerabilities after targeted transitive tooling overrides.
+- Launch guard correctly fails under current preview/local settings. No Webflow, DNS, hosting or production redirects were changed.
+
+### Required external verification
+
+1. Add `http://localhost:3000` as a credential-enabled Sanity CORS origin; add any other actual review origin separately.
+2. Authenticate locally with `npx sanity login` or provide an Editor token in `.env.local`; run the prepared import and switch CONTENT_SOURCE to sanity.
+3. Confirm homepage and all seven service pages render from the real documents and Sanity images. Test replacing/reordering images through Studio.
+4. Add a Viewer token locally; verify authenticated draft save/refresh/publish/exit and anonymous preview rejection against the real project.
+5. Retest delivery performance and image crops from the Sanity CDN, then resolve CONTENT-REVIEW.md before launch.
+
+### Sanity activation follow-up
+
+Google CLI login succeeded and `http://localhost:3000` was added as a credential-enabled CORS origin. The initial import published 28 content documents and uploaded 17 images into `4d7wgp7e/production`, preserving existing IDs. The local `.env.local` now selects `CONTENT_SOURCE=sanity`; homepage HTML was verified to contain real Sanity CDN images and the approved heading. The prior empty-dataset/authentication blockers above are resolved. A separate Viewer token is still needed for authenticated draft preview.
+
+## CMS checkpoint — 27 September 2026
+
+- Embedded Studio, Sanity published-content adapter, isolated local fallback, schema validation and repeatable initial migration are included.
+- Latest checks: lint, formatting, standalone type checking and production build passed; 18 automated tests passed, with the optional live Session test skipped. Sanity schema validation reported zero errors/warnings; dependency audit reported zero vulnerabilities.
+- Signed-in Studio gallery list, newborn gallery editor and homepage navigation were checked after patching the react-i18next namespace bug. Patch installation is reproducible and covered by a browser regression test.
+- A transient standalone type-check failure involved duplicate generated declarations under `.next/types`; after the production build regenerated them, the standalone check passed. Generated output is not committed.
+- Draft preview still requires the server-only Viewer token and an authenticated end-to-end walkthrough. Hosting, production domain migration and live form submission remain separate tasks. Webflow and DNS are unchanged.

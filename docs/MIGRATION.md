@@ -491,3 +491,76 @@ The supplied inline link is `0Ll72MoGY`. The public vendor script creates an ifr
 The default is preview: HTML robots metadata and X-Robots-Tag are `noindex, nofollow`; robots.txt disallows crawling and sitemap.xml returns 404. Canonical and OG URLs use SITE_URL, defaulting to localhost. noindex and robots.txt are not privacy/access control; use hosting authentication for any later private remote review. Set a real staging SITE_URL when hosting is approved. Do not use the live domain for local metadata.
 
 Before production: confirm every old URL disposition against traffic/backlinks; decide canonical host; confirm prices, copy, image crops and legal/privacy details; connect Sanity; test authorised enquiry receipt and Facebook sharing on the real staging URL; migrate content; protect draft preview; approve DNS cutover separately. Only then set SITE_MODE=production and SITE_URL to the approved production origin. The generated sitemap currently contains only the eight prototype routes; expand it to all approved production routes first. No launch switch is part of this milestone.
+
+## Replacement milestone: URL disposition (not deployed)
+
+All actions are proposals for the later cutover. No redirect has been activated.
+
+| Existing URL                                                                          | New URL / candidate                                                                   | Action                                            |
+| ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | ------------------------------------------------- |
+| `/`                                                                                   | `/`                                                                                   | Preserve exactly — implemented                    |
+| `/portfolio`                                                                          | `/portfolio`                                                                          | Needs decision — preserve equivalent preferred    |
+| `/blog`                                                                               | `/blog`                                                                               | Needs decision — preserve equivalent preferred    |
+| `/contact`                                                                            | `/#enquire`                                                                           | Redirect candidate — approve after traffic review |
+| `/rte-styling`                                                                        | `—`                                                                                   | Retire candidate — first check indexing/backlinks |
+| `/privacy-policy`                                                                     | `/privacy-policy`                                                                     | Needs decision — preserve equivalent preferred    |
+| `/about-us`                                                                           | `/#about`                                                                             | Redirect candidate — approve after traffic review |
+| `/price/price-summary`                                                                | `/#photography`                                                                       | Redirect candidate — approve after traffic review |
+| `/style-guide`                                                                        | `—`                                                                                   | Retire candidate — first check indexing/backlinks |
+| `/testimonials`                                                                       | `/#kind-words`                                                                        | Redirect candidate — approve after traffic review |
+| `/post/a-guide-to-printing-your-images`                                               | `/post/a-guide-to-printing-your-images`                                               | Needs decision — preserve equivalent preferred    |
+| `/post/all-you-need-to-know-about-our-baby-photo-shoots`                              | `/post/all-you-need-to-know-about-our-baby-photo-shoots`                              | Needs decision — preserve equivalent preferred    |
+| `/post/five-reasons-a-sitter-shoot-is-a-great-first-year-milestone`                   | `/post/five-reasons-a-sitter-shoot-is-a-great-first-year-milestone`                   | Needs decision — preserve equivalent preferred    |
+| `/post/how-to-take-your-own-newborn-captures-when-youre-unable-to-use-a-professional` | `/post/how-to-take-your-own-newborn-captures-when-youre-unable-to-use-a-professional` | Needs decision — preserve equivalent preferred    |
+| `/post/is-our-photography-style-right-for-you`                                        | `/post/is-our-photography-style-right-for-you`                                        | Needs decision — preserve equivalent preferred    |
+| `/post/oh-boy-what-a-christmas`                                                       | `/post/oh-boy-what-a-christmas`                                                       | Needs decision — preserve equivalent preferred    |
+| `/post/our-baby-photo-shoot-beanbag-backdrop-library`                                 | `/post/our-baby-photo-shoot-beanbag-backdrop-library`                                 | Needs decision — preserve equivalent preferred    |
+| `/post/our-backdrop-library`                                                          | `/post/our-backdrop-library`                                                          | Needs decision — preserve equivalent preferred    |
+| `/post/our-post-lockdown-safety-measures`                                             | `/post/our-post-lockdown-safety-measures`                                             | Needs decision — preserve equivalent preferred    |
+| `/post/our-top-5-extra-special-birthday-shoot-ideas`                                  | `/post/our-top-5-extra-special-birthday-shoot-ideas`                                  | Needs decision — preserve equivalent preferred    |
+| `/post/we-won-an-award`                                                               | `/post/we-won-an-award`                                                               | Needs decision — preserve equivalent preferred    |
+| `/post/welcome-and-what-to-expect`                                                    | `/post/welcome-and-what-to-expect`                                                    | Needs decision — preserve equivalent preferred    |
+| `/post/what-to-wear-on-a-photoshoot`                                                  | `/post/what-to-wear-on-a-photoshoot`                                                  | Needs decision — preserve equivalent preferred    |
+| `/post/why-we-are-baby-led-in-our-approach-to-photo-shoots`                           | `/post/why-we-are-baby-led-in-our-approach-to-photo-shoots`                           | Needs decision — preserve equivalent preferred    |
+| `/prices/baby-newborn`                                                                | `/prices/baby-newborn`                                                                | Preserve exactly — implemented                    |
+| `/prices/cake-smash-bath`                                                             | `/prices/cake-smash-bath`                                                             | Preserve exactly — implemented                    |
+| `/prices/corporate`                                                                   | `/prices/corporate`                                                                   | Needs decision — preserve equivalent preferred    |
+| `/prices/family-portraits`                                                            | `/prices/family-portraits`                                                            | Preserve exactly — implemented                    |
+| `/prices/landscape-prints`                                                            | `/prices/landscape-prints`                                                            | Needs decision — preserve equivalent preferred    |
+| `/prices/maternity`                                                                   | `/prices/maternity`                                                                   | Preserve exactly — implemented                    |
+| `/prices/mini-shoots`                                                                 | `/prices/mini-shoots`                                                                 | Needs decision — preserve equivalent preferred    |
+| `/prices/on-location`                                                                 | `/prices/on-location`                                                                 | Preserve exactly — implemented                    |
+| `/prices/portraits`                                                                   | `/prices/portraits`                                                                   | Preserve exactly — implemented                    |
+| `/prices/sitter`                                                                      | `/prices/sitter`                                                                      | Preserve exactly — implemented                    |
+
+### Query-based portfolio links
+
+| Existing portfolio query                                       | New candidate                                   | Action                                              |
+| -------------------------------------------------------------- | ----------------------------------------------- | --------------------------------------------------- |
+| `https://www.thewhitleycaptures.com/portfolio?tab=baby`        | Matching service gallery, or retained portfolio | Needs decision — verify category before redirecting |
+| `https://www.thewhitleycaptures.com/portfolio?tab=cake-smash`  | Matching service gallery, or retained portfolio | Needs decision — verify category before redirecting |
+| `https://www.thewhitleycaptures.com/portfolio?tab=corporate`   | Matching service gallery, or retained portfolio | Needs decision — verify category before redirecting |
+| `https://www.thewhitleycaptures.com/portfolio?tab=family`      | Matching service gallery, or retained portfolio | Needs decision — verify category before redirecting |
+| `https://www.thewhitleycaptures.com/portfolio?tab=landscape`   | Matching service gallery, or retained portfolio | Needs decision — verify category before redirecting |
+| `https://www.thewhitleycaptures.com/portfolio?tab=mini-shoots` | Matching service gallery, or retained portfolio | Needs decision — verify category before redirecting |
+| `https://www.thewhitleycaptures.com/portfolio?tab=on-location` | Matching service gallery, or retained portfolio | Needs decision — verify category before redirecting |
+| `https://www.thewhitleycaptures.com/portfolio?tab=portraits`   | Matching service gallery, or retained portfolio | Needs decision — verify category before redirecting |
+| `https://www.thewhitleycaptures.com/portfolio?tab=sitter`      | Matching service gallery, or retained portfolio | Needs decision — verify category before redirecting |
+
+### Corporate, Landscape and remaining pages
+
+Corporate and Landscape remain excluded from the seven-service navigation. Traffic and backlinks are unknown. Prefer retaining useful equivalents at `/prices/corporate` and `/prices/landscape-prints` if Rachel still offers them or they receive traffic. If withdrawn, assess relevant destinations individually; do not redirect unrelated Landscape visitors to newborn photography. Retirement with 410 requires explicit approval and evidence review. Mini Shoots, portfolio, blog and all fourteen posts need preservation decisions. The privacy policy needs a reviewed replacement at its existing path before Webflow is retired.
+
+### Cutover checklist — do not execute yet
+
+- Export Webflow content/assets and retain the source audit; export Sanity before bulk changes.
+- Obtain Search Console pages/queries, analytics and backlink reports. Include orphan URLs and www/apex hosts. Approve every mapping.
+- Preserve valuable blog/portfolio/legal content, implement approved redirects on staging, test query variants, chains and 404/410 behaviour.
+- Confirm prices, copy, photos, legal details, mobile crops, Facebook sharing and authorised Session receipt.
+- Configure exact staging origin, hosting access protection, Sanity CORS and server-only preview token. Test anonymous draft rejection.
+- Approve production hosting and canonical host separately. Snapshot all DNS records, including mail; prepare only website record changes.
+- Set `CONTENT_SOURCE=sanity`, approved HTTPS `SITE_URL` and `SITE_MODE=production`. Run `npm run check:launch`, rebuild, verify HTML and headers allow indexing, robots and sitemap. Studio/API remain noindex. Include every retained page in the production sitemap.
+- Obtain explicit DNS-cutover approval. Lower TTL beforehand only with approval; test TLS, both host variants and enquiries. Monitor crawl errors and traffic.
+- Keep Webflow subscription/project and old DNS records through the agreed rollback window. Do not delete the original site at cutover.
+- Rollback: restore recorded website DNS/routing, preserve email records, verify Webflow TLS/forms and monitor propagation. Restore a Sanity export only for content corruption, not an ordinary hosting rollback.
+- Retire Webflow only after an agreed stable period, full content/redirect checks and explicit approval. Retain offline exports.
