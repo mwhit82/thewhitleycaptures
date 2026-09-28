@@ -43,7 +43,10 @@ export function createStudioConfig(previewEnabled: boolean) {
         ? [
             presentationTool({
               title: 'Preview website',
-              previewUrl: { previewMode: { enable: '/api/draft-mode/enable' } },
+              previewUrl: {
+                origin: process.env.NEXT_PUBLIC_SANITY_PREVIEW_URL || undefined,
+                previewMode: { enable: '/api/draft-mode/enable' },
+              },
               resolve: {
                 locations: {
                   homepage: defineLocations({

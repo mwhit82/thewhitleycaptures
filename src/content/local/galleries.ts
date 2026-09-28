@@ -1,5 +1,5 @@
 import type { Gallery } from '../types';
-import i from './images.json';
+import i from './images.json' with { type: 'json' };
 export const galleries: Gallery[] = [
   {
     id: 'featured',

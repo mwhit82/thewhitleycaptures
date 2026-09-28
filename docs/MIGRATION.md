@@ -564,3 +564,7 @@ Corporate and Landscape remain excluded from the seven-service navigation. Traff
 - Keep Webflow subscription/project and old DNS records through the agreed rollback window. Do not delete the original site at cutover.
 - Rollback: restore recorded website DNS/routing, preserve email records, verify Webflow TLS/forms and monitor propagation. Restore a Sanity export only for content corruption, not an ordinary hosting rollback.
 - Retire Webflow only after an agreed stable period, full content/redirect checks and explicit approval. Retain offline exports.
+
+## Cloudflare preview — 28 September 2026
+
+Cloudflare Workers is the intended production host. The temporary review site is https://thewhitleycaptures-preview.thewhitleycaptures.workers.dev, with authenticated Sanity Studio at `/studio`. It uses vinext alongside the unchanged local Next.js workflow. Hosted draft preview is configured with a server-only Viewer secret and an exact credential-enabled Sanity CORS origin. The public preview remains noindex/nofollow; no custom domain, DNS, nameserver or Webflow change has been made. See [HOSTING.md](HOSTING.md) for exact build settings, variables and the separately approved cutover process.

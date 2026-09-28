@@ -14,7 +14,12 @@
     "cms:seed": "node --import tsx scripts/seed-sanity.ts",
     "cms:seed:login": "sanity exec scripts/seed-sanity.ts --with-user-token -- --apply",
     "check:launch": "node --import tsx scripts/check-launch.ts",
-    "postinstall": "patch-package --error-on-fail"
+    "postinstall": "patch-package --error-on-fail",
+    "dev:cloudflare": "vite dev --port 3002",
+    "build:cloudflare": "vite build",
+    "preview:cloudflare": "wrangler dev --config dist/server/wrangler.json",
+    "deploy:cloudflare": "vinext-cloudflare deploy --config wrangler.json",
+    "deploy:cloudflare:built": "vinext-cloudflare deploy --config dist/server/wrangler.json --skip-build"
   },
   "engines": {
     "node": ">=22.13.0"
@@ -24,22 +29,28 @@
     "@fontsource/manrope": "^5.3.0",
     "@sanity/client": "^8.7.0",
     "@sanity/image-url": "^2.1.1",
+    "@vinext/cloudflare": "^1.0.0-beta.11",
     "next": "^16.3.6",
     "next-sanity": "^13.3.4",
     "patch-package": "8.0.1",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
+    "react-server-dom-webpack": "^19.3.0",
     "sanity": "^6.16.0",
     "server-only": "^0.0.1",
-    "styled-components": "^6.5.3"
+    "styled-components": "^6.5.3",
+    "vinext": "^1.0.0-beta.13"
   },
   "devDependencies": {
+    "@cloudflare/vite-plugin": "^1.61.0",
     "@playwright/test": "^1.63.0",
     "@sanity/types": "^6.16.0",
     "@tailwindcss/postcss": "^4.3.3",
     "@types/node": "^26.6.3",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^5.2.0",
+    "@vitejs/plugin-rsc": "^0.5.35",
     "esbuild": "^0.28.2",
     "eslint": "^9.39.5",
     "eslint-config-next": "^16.3.6",
@@ -47,7 +58,9 @@
     "prettier": "^3.9.9",
     "tailwindcss": "^4.3.3",
     "tsx": "^4.23.15",
-    "typescript": "^6.0.3"
+    "typescript": "^6.0.3",
+    "vite": "^8.3.1",
+    "wrangler": "^4.142.0"
   },
   "overrides": {
     "@module-federation/dts-plugin": {
@@ -60,6 +73,10 @@
     "typeid-js": {
       "uuid": "^11.1.1"
     },
-    "react-i18next": "17.0.15"
-  }
+    "react-i18next": "17.0.15",
+    "satori": {
+      "fflate": "^0.7.5"
+    }
+  },
+  "type": "module"
 }

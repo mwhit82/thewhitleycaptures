@@ -4,7 +4,11 @@ export const metadata = {
   title: 'Edit your website | The Whitley Captures',
   robots: { index: false, follow: false },
 };
-export { viewport } from 'next-sanity/studio';
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  viewportFit: 'cover' as const,
+};
 export default function StudioPage() {
   if (!process.env.NEXT_PUBLIC_SANITY_PROJECT_ID)
     return (

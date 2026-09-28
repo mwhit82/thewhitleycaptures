@@ -13,7 +13,7 @@ npm run dev
 
 Open http://localhost:3000. With no environment file, the site runs from isolated local fixtures. The real Session form needs internet access and provides an email fallback. No hosting account is required.
 
-For a phone on the same trusted Wi-Fi, use `http://YOUR-COMPUTER-LAN-IP:3000` and keep the server running. Restart it if the computer’s address changes. A remote review URL is not deployed. Search directives are not access control; a future remote staging site needs hosting authentication.
+For a phone on the same trusted Wi-Fi, use `http://YOUR-COMPUTER-LAN-IP:3000` and keep the server running. Restart it if the computer’s address changes. A remote review is now available at https://thewhitleycaptures-preview.thewhitleycaptures.workers.dev. See [HOSTING.md](docs/HOSTING.md) for deployment and Studio access. This public preview is noindexed; search directives are not access control.
 
 ## Real Sanity content
 

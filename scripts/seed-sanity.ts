@@ -4,7 +4,7 @@ import {
   servicesQuery,
   settingsQuery,
 } from '../src/content/sanity/queries';
-import localImages from '../src/content/local/images.json';
+import localImages from '../src/content/local/images.json' with { type: 'json' };
 import { createRequire } from 'node:module';
 import { resolve } from 'node:path';
 import { createClient } from '@sanity/client';

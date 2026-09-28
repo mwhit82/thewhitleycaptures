@@ -1,5 +1,5 @@
 import type { Service } from '../types';
-import i from './images.json';
+import i from './images.json' with { type: 'json' };
 const summaries = [
   {
     id: 'baby-newborn',

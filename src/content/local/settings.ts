@@ -1,5 +1,5 @@
 import type { SiteSettings } from '../types';
-import images from './images.json';
+import images from './images.json' with { type: 'json' };
 export const settings: SiteSettings = {
   id: 'site-settings',
   name: 'The Whitley Captures',

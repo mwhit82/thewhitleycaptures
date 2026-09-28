@@ -1,20 +1,15 @@
 'use client';
-import { useMemo } from 'react';
-import { NextStudio } from 'next-sanity/studio';
-import { StyleSheetManager } from 'styled-components';
-import { createStudioConfig } from '../../sanity.config';
-// Sanity's intent links need these props, but native HTML elements do not.
-function shouldForwardProp(prop: string, target: unknown) {
-  return typeof target !== 'string' || !['intent', 'params'].includes(prop);
-}
+import dynamic from 'next/dynamic';
+
+// Studio is an authenticated editing app. Load it in the browser so its Node
+// oriented dependencies are never evaluated while Workers renders the shell.
+const StudioClient = dynamic(
+  () => import('./StudioClient').then((module) => module.WebsiteStudio),
+  {
+    ssr: false,
+    loading: () => <p role="status">Loading your editing workspace…</p>,
+  },
+);
 export function WebsiteStudio({ previewEnabled }: { previewEnabled: boolean }) {
-  const config = useMemo(
-    () => createStudioConfig(previewEnabled),
-    [previewEnabled],
-  );
-  return (
-    <StyleSheetManager shouldForwardProp={shouldForwardProp}>
-      <NextStudio config={config} />
-    </StyleSheetManager>
-  );
+  return <StudioClient previewEnabled={previewEnabled} />;
 }

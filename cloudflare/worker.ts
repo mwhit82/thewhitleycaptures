@@ -1,0 +1,27 @@
+import handler from 'vinext/server/fetch-handler';
+export * from 'vinext/server/fetch-handler';
+
+const worker = {
+  ...handler,
+  async fetch(request: Request, env: { SITE_MODE?: string }, context: unknown) {
+    const response = await handler.fetch(request, env, context);
+    const headers = new Headers(response.headers);
+    const path = new URL(request.url).pathname;
+    const preview = env.SITE_MODE !== 'production';
+    const privateRoute = /^\/(studio|api)(\/|$)/.test(path);
+    const draftSession = /(?:^|;\s*)__prerender_bypass=/.test(
+      request.headers.get('cookie') || '',
+    );
+    if (preview || privateRoute || draftSession) {
+      headers.set('X-Robots-Tag', 'noindex, nofollow');
+      headers.set('Cache-Control', 'private, no-store');
+    }
+    return new Response(response.body, {
+      status: response.status,
+      statusText: response.statusText,
+      headers,
+    });
+  },
+};
+
+export default worker;

@@ -6,6 +6,9 @@ export default defineConfig([
   ...nextTs,
   globalIgnores([
     '.next/**',
+    'dist/**',
+    '.wrangler/**',
+    '.vinext/**',
     'next-env.d.ts',
     'playwright-report/**',
     'test-results/**',

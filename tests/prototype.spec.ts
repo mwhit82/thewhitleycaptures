@@ -4,7 +4,7 @@ import { homepage } from '../src/content/local/homepage';
 import { galleries } from '../src/content/local/galleries';
 import { testimonials } from '../src/content/local/testimonials';
 import { existsSync } from 'node:fs';
-import images from '../src/content/local/images.json';
+import images from '../src/content/local/images.json' with { type: 'json' };
 
 test('local references and image assets are complete', () => {
   expect(new Set(services.map((s) => s.slug)).size).toBe(7);

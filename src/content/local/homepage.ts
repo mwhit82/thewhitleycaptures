@@ -1,5 +1,5 @@
 import type { Homepage } from '../types';
-import images from './images.json';
+import images from './images.json' with { type: 'json' };
 import { settings } from './settings';
 export const homepage: Homepage = {
   id: 'homepage',
