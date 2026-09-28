@@ -1,10 +1,15 @@
 'use client';
 import { ArrowIcon } from '@/components/ArrowIcon';
 
-import { useRef, useState } from 'react';
+import { useRef, useState, useSyncExternalStore } from 'react';
 import type { Gallery as GalleryContent } from '@/content/types';
 import { Photo } from './Photo';
+// Keep server-rendered controls inactive until their event handlers are attached.
+const subscribe = () => () => {};
+const clientReady = () => true;
+const serverReady = () => false;
 export function Gallery({ gallery }: { gallery: GalleryContent }) {
+  const hydrated = useSyncExternalStore(subscribe, clientReady, serverReady);
   const touchStart = useRef<{ x: number; y: number } | null>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [index, setIndex] = useState(0);
@@ -25,6 +30,7 @@ export function Gallery({ gallery }: { gallery: GalleryContent }) {
           <figure key={image.id}>
             <button
               className="gallery-open"
+              disabled={!hydrated}
               aria-label={`View photograph ${n + 1}: ${image.alt || gallery.title}`}
               onClick={(event) => {
                 trigger.current = event.currentTarget;
