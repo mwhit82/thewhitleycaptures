@@ -1,3 +1,4 @@
+import { ArrowIcon } from '@/components/ArrowIcon';
 import Link from 'next/link';
 export default function NotFound() {
   return (
@@ -6,7 +7,10 @@ export default function NotFound() {
       <h1>This page isn’t here.</h1>
       <p>Let’s find your way back to something lovely.</p>
       <Link className="button" href="/">
-        Back to the homepage <span aria-hidden="true">↗</span>
+        Back to the homepage{' '}
+        <span aria-hidden="true">
+          <ArrowIcon direction="up-right" />
+        </span>
       </Link>
     </main>
   );

@@ -1,3 +1,4 @@
+import { ArrowIcon } from '@/components/ArrowIcon';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import {
@@ -81,7 +82,7 @@ export default async function ServicePage({ params }: Props) {
       <section className="service-hero">
         <div className="service-hero-copy">
           <Link href="/#photography" className="breadcrumb">
-            ← All photography
+            <ArrowIcon direction="left" /> All photography
           </Link>
           <p className="eyebrow">YOUR STORY, THROUGH MY LENS</p>
           <h1>{service.title}</h1>
@@ -98,12 +99,18 @@ export default async function ServicePage({ params }: Props) {
             className="service-shortcuts"
             aria-label="Explore this photo shoot"
           >
-            <Link href="#prices">View prices ↓</Link>
-            <Link href={portfolioHref(slug)}>View portfolio ↗</Link>
+            <Link href="#prices">
+              View prices <ArrowIcon direction="down" />
+            </Link>
+            <Link href={portfolioHref(slug)}>
+              View portfolio <ArrowIcon direction="up-right" />
+            </Link>
           </nav>
           <Link className="button" href={service.cta.href}>
             {service.cta.label}
-            <span aria-hidden="true">↗</span>
+            <span aria-hidden="true">
+              <ArrowIcon direction="up-right" />
+            </span>
           </Link>
         </div>
         <div className="service-hero-photo">
@@ -125,7 +132,9 @@ export default async function ServicePage({ params }: Props) {
               <h2>Prices &amp; packages</h2>
               <p>Choose the photo shoot that suits you.</p>
             </div>
-            <p className="review-note">{service.pricingNote}</p>
+            {!isProduction && service.pricingNote && (
+              <p className="review-note">{service.pricingNote}</p>
+            )}
             <div className="packages">
               {service.packages.map((p, index) => (
                 <article key={p.id}>
@@ -143,7 +152,9 @@ export default async function ServicePage({ params }: Props) {
                   {p.note && <p className="package-note">{p.note}</p>}
                   <Link className="text-link" href="/#enquire">
                     Enquire about {p.title}
-                    <span aria-hidden="true">↗</span>
+                    <span aria-hidden="true">
+                      <ArrowIcon direction="up-right" />
+                    </span>
                   </Link>
                 </article>
               ))}
@@ -165,7 +176,7 @@ export default async function ServicePage({ params }: Props) {
               to you.
             </p>
             <Link className="button" href="/#enquire">
-              Ask about prices ↗
+              Ask about prices <ArrowIcon direction="up-right" />
             </Link>
           </div>
         </section>
@@ -189,7 +200,8 @@ export default async function ServicePage({ params }: Props) {
             }}
           />
           <Link className="button portfolio-cta" href={portfolioHref(slug)}>
-            Browse the full {service.title.toLowerCase()} portfolio ↗
+            Browse the full {service.title.toLowerCase()} portfolio{' '}
+            <ArrowIcon direction="up-right" />
           </Link>
         </section>
       )}

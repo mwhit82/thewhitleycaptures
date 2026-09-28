@@ -1,5 +1,6 @@
 import type { Homepage } from '../types';
 import images from './images.json' with { type: 'json' };
+import articles from './articles.json' with { type: 'json' };
 import { settings } from './settings';
 export const homepage: Homepage = {
   id: 'homepage',
@@ -17,6 +18,12 @@ export const homepage: Homepage = {
     photoCaption: 'A little of life, held still.',
   },
   awards: {
+    image: {
+      ...articles[0].blocks
+        .flatMap((b) => b.images || [])
+        .find((i) => i.id === 'review-ef61c81e4fb716')!,
+      alt: 'Legacy Photography Awards Excellence distinction, newborn category, February 2026 — sleeping baby in blue, photographed by Rachel Whitley',
+    },
     heading: 'Photographs made with care. Recognised with pride.',
     copy: 'I’m grateful to have my work recognised by photography awards. The little people in front of my camera always come first.',
     articleSlug: 'we-won-an-award',

@@ -1,3 +1,4 @@
+import { ArrowIcon } from '@/components/ArrowIcon';
 import Link from 'next/link';
 import { getHomepage, getSiteSettings } from '@/content';
 import { HeroSlideshow } from '@/components/HeroSlideshow';
@@ -60,11 +61,15 @@ export default async function Home() {
           <div className="hero-links">
             <Link className="button" href={home.hero.cta.href}>
               {home.hero.cta.label}
-              <span aria-hidden="true">↗</span>
+              <span aria-hidden="true">
+                <ArrowIcon direction="up-right" />
+              </span>
             </Link>
             <Link className="text-link" href={home.hero.secondaryCta.href}>
               {home.hero.secondaryCta.label}
-              <span aria-hidden="true">↓</span>
+              <span aria-hidden="true">
+                <ArrowIcon direction="down" />
+              </span>
             </Link>
           </div>
           <p className="hero-footnote">
@@ -113,7 +118,9 @@ export default async function Home() {
               {home.featured.cta?.href && (
                 <Link className="text-link" href={home.featured.cta.href}>
                   {home.featured.cta.label}
-                  <span aria-hidden="true">↗</span>
+                  <span aria-hidden="true">
+                    <ArrowIcon direction="up-right" />
+                  </span>
                 </Link>
               )}
             </div>
@@ -122,13 +129,32 @@ export default async function Home() {
         </section>
       )}
       {home.awards?.articleSlug && (
-        <section className="awards-section section container">
-          <p className="eyebrow">A LITTLE RECOGNITION</p>
-          <h2>{home.awards.heading}</h2>
-          <p>{home.awards.copy}</p>
-          <Link className="text-link" href={`/post/${home.awards.articleSlug}`}>
-            My awards and the stories behind them ↗
-          </Link>
+        <section
+          className={`awards-section section container ${home.awards.image?.src ? 'has-image' : ''}`}
+        >
+          {home.awards.image?.src && (
+            <Link
+              className="awards-image"
+              href={`/post/${home.awards.articleSlug}`}
+            >
+              <Photo
+                image={home.awards.image}
+                sizes="(max-width: 700px) 90vw, 35vw"
+              />
+            </Link>
+          )}
+          <div className="awards-copy">
+            <p className="eyebrow">A LITTLE RECOGNITION</p>
+            <h2>{home.awards.heading}</h2>
+            <p>{home.awards.copy}</p>
+            <Link
+              className="text-link"
+              href={`/post/${home.awards.articleSlug}`}
+            >
+              My awards and the stories behind them{' '}
+              <ArrowIcon direction="up-right" />
+            </Link>
+          </div>
         </section>
       )}
       <Testimonials

@@ -20,7 +20,7 @@ export const homepageQuery = `*[_type == "homepage" && _id == "homepage"][0]{"id
     hero{..., "image": image${photo}, "images": coalesce(images[defined(asset->url)]${photo}, [])}, introduction{..., "paragraphs": coalesce(paragraphs, []), "image": image${photo}}, enquiry,
     services{..., "ids": items[]._ref, "items": coalesce((items[]->${service})[defined(id)], [])},
     featured{..., "galleryId": gallery._ref, "gallery": gallery->${gallery}},
-    testimonials{..., "ids": items[]._ref, "items": coalesce((items[]->${testimonial})[defined(id)], [])}, cta, awards{heading, copy, "articleSlug": coalesce(article->slug.current, articleSlug)}, "seo": seo${seo}}`;
+    testimonials{..., "ids": items[]._ref, "items": coalesce((items[]->${testimonial})[defined(id)], [])}, cta, awards{heading, copy, "image": image${photo}, "articleSlug": coalesce(article->slug.current, articleSlug)}, "seo": seo${seo}}`;
 export const servicesQuery = `*[_type == "photographyService" && slug.current in ["baby-newborn","maternity","portraits","family-portraits","on-location","cake-smash-bath","sitter"]] | order(order asc) ${service}`;
 export const serviceQuery = `*[_type == "photographyService" && slug.current == $slug][0]${service}`;
 

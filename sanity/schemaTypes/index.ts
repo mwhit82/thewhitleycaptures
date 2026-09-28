@@ -260,6 +260,11 @@ export const schemaTypes: SchemaTypeDefinition[] = [
         title: 'Awards introduction',
         type: 'object',
         fields: [
+          {
+            name: 'image',
+            title: 'Award certificate or photograph',
+            type: 'photograph',
+          },
           string('heading', 'Heading'),
           text('copy', 'Introduction'),
           {

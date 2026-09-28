@@ -1,3 +1,4 @@
+import { ArrowIcon } from '@/components/ArrowIcon';
 import Link from 'next/link';
 import { getPortfolio, getSiteSettings } from '@/content';
 import { portfolioTabs, portfolioHref } from '@/content/navigation';
@@ -50,7 +51,7 @@ export default async function Portfolio({
           <div className="section-heading">
             <h2>{selected.title}</h2>
             <Link className="text-link" href={`/prices/${selected.slug}`}>
-              Photo shoots & prices ↗
+              Photo shoots & prices <ArrowIcon direction="up-right" />
             </Link>
           </div>
           {selected.gallery?.images.length ? (

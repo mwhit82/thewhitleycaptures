@@ -1,3 +1,4 @@
+import { ArrowIcon } from '@/components/ArrowIcon';
 import Link from 'next/link';
 import { reviewLinks } from '@/content/navigation';
 import { Photo } from './Photo';
@@ -28,7 +29,10 @@ export function Footer({ settings }: { settings: SiteSettings }) {
           ))}
           {settings.socials.map((s) => (
             <a href={s.href} key={s.href}>
-              {s.label} <span aria-hidden="true">↗</span>
+              {s.label}{' '}
+              <span aria-hidden="true">
+                <ArrowIcon direction="up-right" />
+              </span>
             </a>
           ))}
         </div>

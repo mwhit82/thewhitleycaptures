@@ -86,7 +86,12 @@ export type Homepage = {
     motto?: string;
     photoCaption?: string;
   };
-  awards?: { heading: string; copy: string; articleSlug: string };
+  awards?: {
+    heading: string;
+    copy: string;
+    articleSlug: string;
+    image?: ContentImage;
+  };
   introduction: {
     eyebrow: string;
     heading: string;

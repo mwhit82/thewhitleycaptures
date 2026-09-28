@@ -1,4 +1,6 @@
 'use client';
+import { ArrowIcon } from '@/components/ArrowIcon';
+
 import { useEffect, useRef, useState } from 'react';
 
 type SessionFunction = ((
@@ -151,7 +153,10 @@ export function SessionInquiryForm({ email }: { email: string }) {
             className="text-link"
             onClick={() => window.location.reload()}
           >
-            Try again <span aria-hidden="true">↗</span>
+            Try again{' '}
+            <span aria-hidden="true">
+              <ArrowIcon direction="up-right" />
+            </span>
           </button>
         </div>
       )}

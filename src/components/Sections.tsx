@@ -1,3 +1,4 @@
+import { ArrowIcon } from '@/components/ArrowIcon';
 import Link from 'next/link';
 import type { Homepage, Testimonial, Service } from '@/content/types';
 import { Photo } from './Photo';
@@ -68,11 +69,18 @@ export function ServiceGrid({
                 <h3>{s.title}</h3>
                 <p>{s.description}</p>
               </div>
-              <span aria-hidden="true">↗</span>
+              <span aria-hidden="true">
+                <ArrowIcon direction="up-right" />
+              </span>
             </div>
           </Link>
         ))}
       </div>
+      <p className="portfolio-entrance">
+        <Link className="text-link" href="/portfolio">
+          Explore the full portfolio <ArrowIcon />
+        </Link>
+      </p>
     </section>
   );
 }
@@ -116,7 +124,9 @@ export function FinalCta({ content }: { content: Homepage['cta'] }) {
       <p>{content.copy}</p>
       <Link className="button" href={content.link.href}>
         {content.link.label}
-        <span aria-hidden="true">↗</span>
+        <span aria-hidden="true">
+          <ArrowIcon direction="up-right" />
+        </span>
       </Link>
     </section>
   );

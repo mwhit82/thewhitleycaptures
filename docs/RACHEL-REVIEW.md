@@ -19,7 +19,7 @@ The preview works on your phone or laptop from any network. Sign in to Studio wi
 
 **Homepage → Opening section → Hero slideshow photographs**: select up to three photographs, drag to change their order, and open each one to set its crop/hotspot and image description. The first image loads immediately. Keep three for the rotating design; an empty list uses the fallback photograph. Automatic rotation stops for reduced-motion visitors.
 
-**Homepage → Awards introduction**: edit the heading, introduction and linked article.
+**Homepage → Awards introduction**: edit the heading, introduction, linked article and optional award certificate/photograph. The certificate appears uncropped beside the introduction, or above it on mobile. Clear the image for a text-only section.
 
 **Photography services**: choose the service. “Page copy” contains the introduction; separate paragraphs with a blank line. “Prices & questions” contains packages and pricing notes. Existing additional introduction paragraphs are still supported for older content, but the imported introductions have been combined.
 
@@ -32,3 +32,7 @@ The preview works on your phone or laptop from any network. Sign in to Studio wi
 Changes save as drafts. Choose **Preview website**, open the page you edited and use **Refresh preview** after saving. Normal visitors continue to see the published version. Publish only when you are happy. Use **Exit preview** to see the ordinary website again.
 
 Publishing in Sanity updates this new website; it does not edit Webflow. Code changes are deployed automatically from GitHub. Moving the real domain is a separate, explicitly approved step after your review.
+
+## Review notes
+
+Internal article, service and pricing reminders are visible to everyone on the preview site. They disappear when the site is configured for production; publishing a Sanity document does not hide them. Customer-facing package inclusions and conditions remain visible.

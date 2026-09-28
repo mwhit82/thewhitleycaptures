@@ -87,7 +87,7 @@ export function HeroSlideshow({
                 setPaused(true);
               }}
             >
-              {n + 1}
+              <span className="slide-indicator">{n + 1}</span>
             </button>
           ))}
           {!reduced && (
@@ -96,7 +96,22 @@ export function HeroSlideshow({
               onClick={() => setPaused((value) => !value)}
               aria-label={paused ? 'Play slideshow' : 'Pause slideshow'}
             >
-              {paused ? 'Play' : 'Pause'}
+              <span className="slide-indicator">
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  aria-hidden="true"
+                  focusable="false"
+                >
+                  {paused ? (
+                    <path d="m6 3 11 7-11 7Z" />
+                  ) : (
+                    <path d="M5 3h3v14H5zm7 0h3v14h-3z" />
+                  )}
+                </svg>
+              </span>
             </button>
           )}
         </div>

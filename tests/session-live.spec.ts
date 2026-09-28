@@ -35,6 +35,10 @@ test('live Session loads and remains bounded across navigation', async ({
     expect(buttonBox!.y + buttonBox!.height).toBeLessThanOrEqual(
       frameBox!.y + frameBox!.height + 1,
     );
+    const branding = frame.getByRole('link', { name: /Powered by/ });
+    await branding.scrollIntoViewIfNeeded();
+    await expect(branding).toBeVisible();
+    await expect(page.locator('.session-mount')).toHaveCSS('min-height', '0px');
     const heights = [];
     for (let sample = 0; sample < 3; sample++) {
       await expect(

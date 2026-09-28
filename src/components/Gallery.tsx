@@ -1,4 +1,6 @@
 'use client';
+import { ArrowIcon } from '@/components/ArrowIcon';
+
 import { useRef, useState } from 'react';
 import type { Gallery as GalleryContent } from '@/content/types';
 import { Photo } from './Photo';
@@ -36,7 +38,7 @@ export function Gallery({ gallery }: { gallery: GalleryContent }) {
                 sizes="(max-width: 600px) 100vw, (max-width: 1000px) 50vw, 40vw"
               />
               <span className="gallery-zoom" aria-hidden="true">
-                View photograph ↗
+                View photograph <ArrowIcon direction="up-right" />
               </span>
             </button>
             {image.caption && <figcaption>{image.caption}</figcaption>}
@@ -103,7 +105,7 @@ export function Gallery({ gallery }: { gallery: GalleryContent }) {
               onClick={() => move(-1)}
               aria-label="Previous photograph"
             >
-              ← Previous
+              <ArrowIcon direction="left" /> Previous
             </button>
             <p aria-live="polite">
               {selectedIndex + 1} / {gallery.images.length}
@@ -114,7 +116,7 @@ export function Gallery({ gallery }: { gallery: GalleryContent }) {
               onClick={() => move(1)}
               aria-label="Next photograph"
             >
-              Next →
+              Next <ArrowIcon direction="right" />
             </button>
           </div>
         </div>

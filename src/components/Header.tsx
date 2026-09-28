@@ -1,4 +1,6 @@
 'use client';
+import { ArrowIcon } from '@/components/ArrowIcon';
+
 import Link from 'next/link';
 import { reviewLinks } from '@/content/navigation';
 import { Photo } from './Photo';
@@ -49,7 +51,10 @@ export function Header({
         </nav>
         <div className="header-actions">
           <Link className="header-cta" href="/#enquire" onClick={close}>
-            Check availability <span aria-hidden="true">↗</span>
+            Check availability{' '}
+            <span aria-hidden="true">
+              <ArrowIcon direction="up-right" />
+            </span>
           </Link>
           <button
             ref={toggle}
@@ -79,7 +84,9 @@ export function Header({
           {services.map((n) => (
             <Link key={n.href} href={n.href} onClick={close}>
               {n.label}
-              <span aria-hidden="true">↗</span>
+              <span aria-hidden="true">
+                <ArrowIcon direction="up-right" />
+              </span>
             </Link>
           ))}
         </div>

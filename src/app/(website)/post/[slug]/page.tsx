@@ -1,3 +1,4 @@
+import { ArrowIcon } from '@/components/ArrowIcon';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getArticleBySlug, getSiteSettings } from '@/content';
@@ -19,7 +20,8 @@ export default async function ArticlePage({ params }: Props) {
         className="breadcrumb"
         href={a.kind === 'awards' ? '/' : '/client-guides'}
       >
-        ← {a.kind === 'awards' ? 'Home' : 'Client guides'}
+        <ArrowIcon direction="left" />{' '}
+        {a.kind === 'awards' ? 'Home' : 'Client guides'}
       </Link>
       <header className="article-heading">
         <p className="eyebrow">
@@ -62,7 +64,7 @@ export default async function ArticlePage({ params }: Props) {
       <div className="article-end">
         <h2>Can I help with anything?</h2>
         <Link className="button" href="/#enquire">
-          Get in touch ↗
+          Get in touch <ArrowIcon direction="up-right" />
         </Link>
       </div>
     </main>

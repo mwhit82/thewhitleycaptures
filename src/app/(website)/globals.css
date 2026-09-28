@@ -1353,7 +1353,7 @@ img {
    resize script includes viewport height and can over-report after navigation.
    Native iframe scrolling remains available for long forms/large text. */
 .session-mount iframe {
-  max-height: 60rem !important;
+  max-height: 50rem !important;
   overflow: auto !important;
 }
 .session-form[data-state='error'] .session-mount {
@@ -1516,8 +1516,8 @@ body:has(.lightbox[open]) {
 .hero-slideshow-controls {
   position: absolute;
   z-index: 2;
-  bottom: 5rem;
-  left: 1.5rem;
+  bottom: 12px;
+  left: 12px;
   display: flex;
   gap: 0.5rem;
 }
@@ -1691,8 +1691,8 @@ body:has(.lightbox[open]) {
 }
 @media (max-width: 700px) {
   .hero-slideshow-controls {
-    bottom: 4rem;
-    left: 1rem;
+    bottom: 12px;
+    left: 12px;
   }
   .service-hero-copy {
     padding-bottom: 2rem;
@@ -1719,4 +1719,80 @@ body:has(.lightbox[open]) {
 }
 .footer-socials {
   flex-wrap: wrap;
+}
+
+/* Compact visuals retain comfortable, separate touch targets. */
+.arrow-icon {
+  display: inline-block;
+  vertical-align: -0.15em;
+  flex-shrink: 0;
+}
+.hero-slideshow-controls {
+  gap: 0;
+}
+.hero-slideshow-controls button {
+  width: 44px;
+  height: 44px;
+  padding: 6px;
+  border: 0;
+  background: transparent;
+  display: grid;
+  place-items: center;
+}
+.hero-slideshow-controls button[aria-pressed='true'] {
+  background: transparent;
+  color: white;
+}
+.slide-indicator {
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  font-size: 12px;
+  line-height: 1;
+  background: #23291fe6;
+  border: 1px solid #fff9;
+}
+.hero-slideshow-controls button[aria-pressed='true'] .slide-indicator {
+  background: white;
+  color: #282f27;
+}
+.session-form[data-state='ready'] .session-mount {
+  min-height: 0;
+}
+.session-form {
+  padding: 16px;
+}
+.portfolio-entrance {
+  margin-top: 1.5rem;
+  text-align: right;
+}
+.awards-section.has-image {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: center;
+  text-align: left;
+}
+.awards-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+.awards-section.has-image h2 {
+  font-size: clamp(2rem, 3.5vw, 3.5rem);
+}
+@media (max-width: 700px) {
+  .awards-section.has-image {
+    grid-template-columns: 1fr;
+  }
+  .awards-image {
+    max-width: 420px;
+    margin-inline: auto;
+  }
+  .session-mount iframe {
+    max-height: 52rem !important;
+  }
 }
