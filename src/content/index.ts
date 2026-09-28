@@ -8,5 +8,12 @@ export const contentSource =
 if (!['sanity', 'local'].includes(contentSource))
   throw new Error('CONTENT_SOURCE must be sanity or local');
 const provider = contentSource === 'sanity' ? sanityProvider : localProvider;
-export const { getSiteSettings, getHomepage, getServices, getServiceBySlug } =
-  provider;
+export const {
+  getSiteSettings,
+  getHomepage,
+  getServices,
+  getServiceBySlug,
+  getPortfolio,
+  getArticles,
+  getArticleBySlug,
+} = provider;

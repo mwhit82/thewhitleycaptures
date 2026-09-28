@@ -1,4 +1,4 @@
-import { getServices } from '@/content';
+import { getServices, getArticles } from '@/content';
 import { isProduction, siteUrl } from '@/lib/seo';
 export async function GET() {
   if (!isProduction)
@@ -6,7 +6,13 @@ export async function GET() {
       status: 404,
       headers: { 'X-Robots-Tag': 'noindex, nofollow' },
     });
-  const paths = ['/', ...(await getServices()).map((s) => `/prices/${s.slug}`)];
+  const paths = [
+    '/',
+    '/portfolio',
+    '/client-guides',
+    ...(await getArticles()).map((a) => `/post/${a.slug}`),
+    ...(await getServices()).map((s) => `/prices/${s.slug}`),
+  ];
   const escape = (s: string) =>
     s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
   return new Response(

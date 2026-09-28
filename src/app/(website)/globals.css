@@ -1483,3 +1483,240 @@ body:has(.lightbox[open]) {
   background: #e8e4dc;
   aspect-ratio: 3/2;
 }
+
+/* Rachel's review: readable guides, clearer prices and a quiet photographic hero. */
+.menu-toggle {
+  display: inline-flex;
+}
+.mobile-nav:not([hidden]) {
+  display: block;
+}
+.mobile-nav {
+  max-height: calc(100dvh - 90px);
+  overflow-y: auto;
+}
+.hero-slideshow {
+  position: absolute;
+  inset: 0;
+}
+.hero-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 900ms ease;
+}
+.hero-slide.is-active {
+  opacity: 1;
+}
+.hero-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.hero-slideshow-controls {
+  position: absolute;
+  z-index: 2;
+  bottom: 5rem;
+  left: 1.5rem;
+  display: flex;
+  gap: 0.5rem;
+}
+.hero-slideshow-controls button {
+  min-width: 44px;
+  min-height: 44px;
+  border: 1px solid #fff9;
+  background: #23291fe6;
+  color: white;
+  border-radius: 24px;
+  padding: 0.5rem 0.8rem;
+  cursor: pointer;
+}
+.hero-slideshow-controls button[aria-pressed='true'] {
+  background: #fff;
+  color: #282f27;
+}
+.service-shortcuts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 2rem;
+  margin: 1.5rem 0;
+}
+.service-shortcuts a {
+  padding: 0.6rem 0;
+  border-bottom: 1px solid currentColor;
+}
+#prices {
+  scroll-margin-top: 100px;
+}
+.portfolio-cta {
+  margin-top: 2rem;
+}
+.portfolio-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin: 2rem 0 3rem;
+}
+.portfolio-nav a {
+  padding: 0.8rem 1rem;
+  border: 1px solid #b7beb0;
+  border-radius: 2rem;
+}
+.portfolio-nav a[aria-current='page'] {
+  background: #384336;
+  color: #fff;
+}
+.portfolio-page h1,
+.guide-index h1,
+.article-heading h1 {
+  font-size: clamp(2.8rem, 7vw, 5.5rem);
+  line-height: 1.05;
+  margin: 1rem 0;
+}
+.page-lead {
+  max-width: 45rem;
+  font-size: 1.15rem;
+}
+.article-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+.article-cards article {
+  padding: 2rem;
+  background: #e9eae2;
+}
+.article-cards h3 {
+  font-size: 2rem;
+  line-height: 1.15;
+  margin: 0 0 1rem;
+}
+.article-cards p {
+  margin-bottom: 1.5rem;
+}
+.awards-section {
+  text-align: center;
+  max-width: 900px;
+}
+.awards-section h2 {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  line-height: 1.1;
+}
+.awards-section p {
+  margin: 1.5rem auto;
+  max-width: 42rem;
+}
+.article-heading {
+  max-width: 850px;
+  margin: 2rem auto 3rem;
+  text-align: center;
+}
+.article-body {
+  max-width: 900px;
+  margin: auto;
+}
+.article-body > p {
+  max-width: 720px;
+  margin: 1.4rem auto;
+  line-height: 1.85;
+}
+.article-body > h2 {
+  max-width: 720px;
+  margin: 3rem auto 1rem;
+  font-size: 2.4rem;
+  line-height: 1.15;
+}
+.article-body a {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+.article-body .gallery {
+  display: block;
+  margin: 2rem auto;
+}
+.article-body .gallery figure {
+  margin: 0;
+}
+.article-body .gallery-open {
+  width: 100%;
+}
+.article-body .gallery img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: auto;
+  object-fit: contain;
+}
+.article-end {
+  text-align: center;
+  margin-top: 4rem;
+}
+.article-end h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+}
+.portfolio-page .gallery {
+  align-items: start;
+}
+.portfolio-page .gallery figure {
+  transform: none;
+  margin-top: 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-slide {
+    transition: none;
+  }
+}
+@media (min-width: 701px) {
+  .mobile-nav {
+    position: absolute;
+    right: 2rem;
+    top: 100%;
+    width: min(650px, 90vw);
+    padding: 2rem;
+    background: #faf9f5;
+    box-shadow: 0 12px 20px #0001;
+  }
+  .mobile-services {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.7rem;
+  }
+  .mobile-extra {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+}
+@media (max-width: 700px) {
+  .hero-slideshow-controls {
+    bottom: 4rem;
+    left: 1rem;
+  }
+  .service-hero-copy {
+    padding-bottom: 2rem;
+  }
+  .article-cards article {
+    padding: 1.5rem;
+  }
+}
+
+.hero-slideshow {
+  bottom: 40px;
+}
+.article-body .gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+  gap: 1.5rem;
+}
+.article-body .gallery figure {
+  transform: none;
+  margin-top: 0;
+}
+.footer-main > * {
+  min-width: 0;
+}
+.footer-socials {
+  flex-wrap: wrap;
+}

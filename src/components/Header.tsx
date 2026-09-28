@@ -1,5 +1,6 @@
 'use client';
 import Link from 'next/link';
+import { reviewLinks } from '@/content/navigation';
 import { Photo } from './Photo';
 import { useRef, useState } from 'react';
 import { usePathname } from 'next/navigation';
@@ -70,7 +71,7 @@ export function Header({
       <nav
         id="mobile-menu"
         className="mobile-nav"
-        aria-label="Mobile navigation"
+        aria-label="Website menu"
         hidden={!open}
       >
         <p className="eyebrow">FIND YOUR PHOTO SHOOT</p>
@@ -83,7 +84,7 @@ export function Header({
           ))}
         </div>
         <div className="mobile-extra">
-          {navigation.slice(1).map((n) => (
+          {[...navigation.slice(1), ...reviewLinks].map((n) => (
             <Link key={n.href} href={n.href} onClick={close}>
               {n.label}
             </Link>

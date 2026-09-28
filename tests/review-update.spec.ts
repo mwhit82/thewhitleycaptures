@@ -1,0 +1,136 @@
+import { expect, test } from '@playwright/test';
+import articles from '../src/content/local/articles.json' with { type: 'json' };
+import sources from '../docs/review-source-articles.json' with { type: 'json' };
+import { services } from '../src/content/local/services';
+import { portfolioHref } from '../src/content/navigation';
+
+test('migrated guides retain every source image and meaningful text', () => {
+  for (const article of articles) {
+    const source = sources.find((s) => s.id === article.id)!;
+    const imageIds = (a: typeof article) =>
+      a.blocks.flatMap((b) =>
+        'images' in b ? b.images?.map((i) => i.id) || [] : [],
+      );
+    expect(imageIds(article)).toEqual(imageIds(source));
+    expect(article.blocks.filter((b) => b.kind !== 'gallery').length).toBe(
+      source.blocks.filter((b) => b.kind !== 'gallery').length,
+    );
+  }
+});
+test('hero rotates, supports manual controls and pauses for focus', async ({
+  page,
+}) => {
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  await page.goto('/');
+  const region = page.getByRole('region', { name: 'Featured photography' });
+  const first = region.getByRole('button', { name: /Show photograph 1:/ });
+  const second = region.getByRole('button', { name: /Show photograph 2:/ });
+  await expect(first).toHaveAttribute('aria-pressed', 'true');
+  await expect(second).toHaveAttribute('aria-pressed', 'true', {
+    timeout: 10000,
+  });
+  await first.focus();
+  await page.waitForTimeout(6500);
+  await expect(second).toHaveAttribute('aria-pressed', 'true');
+  await first.click();
+  await expect(first).toHaveAttribute('aria-pressed', 'true');
+  await expect(
+    region.getByRole('button', { name: 'Play slideshow' }),
+  ).toBeVisible();
+});
+test('reduced motion keeps the hero still with manual access', async ({
+  page,
+}) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto('/');
+  const r = page.getByRole('region', { name: 'Featured photography' });
+  await page.waitForTimeout(6500);
+  await expect(
+    r.getByRole('button', { name: /Show photograph 1:/ }),
+  ).toHaveAttribute('aria-pressed', 'true');
+  await expect(r.getByRole('button', { name: 'Pause slideshow' })).toHaveCount(
+    0,
+  );
+  await r.getByRole('button', { name: /Show photograph 3:/ }).click();
+  await expect(
+    r.getByRole('button', { name: /Show photograph 3:/ }),
+  ).toHaveAttribute('aria-pressed', 'true');
+});
+test('prices precede selected galleries and every service links to its portfolio', async ({
+  page,
+}) => {
+  for (const s of services) {
+    await page.goto(`/prices/${s.slug}`);
+    await expect(page.locator('.service-story')).toHaveCount(0);
+    await expect(
+      page.getByRole('link', { name: 'View portfolio', exact: false }),
+    ).toHaveAttribute('href', portfolioHref(s.slug));
+    expect(
+      await page
+        .locator('#prices')
+        .evaluate((el) =>
+          Boolean(
+            el.compareDocumentPosition(
+              document.querySelector('.service-gallery')!,
+            ) & Node.DOCUMENT_POSITION_FOLLOWING,
+          ),
+        ),
+    ).toBe(true);
+  }
+});
+test('portfolio category links, nested refresh, unsupported categories and new pages', async ({
+  page,
+  request,
+}) => {
+  test.setTimeout(90000);
+  const errors: string[] = [];
+  page.on('pageerror', (e) => errors.push(e.message));
+  for (const s of services) {
+    await page.goto(portfolioHref(s.slug));
+    await expect(
+      page.locator('.portfolio-nav [aria-current="page"]'),
+    ).toHaveText(s.title);
+    await expect(page.locator('.gallery-open').first()).toBeVisible();
+  }
+  await page.reload();
+  await expect(page.locator('h1')).toHaveText('My portfolio');
+  await page.goto('/portfolio?tab=corporate');
+  await expect(
+    page.getByText('This collection isn’t available in the preview yet.'),
+  ).toBeVisible();
+  for (const path of [
+    '/client-guides',
+    ...articles.map((a) => `/post/${a.slug}`),
+  ]) {
+    const response = await page.goto(path);
+    expect(response?.status()).toBe(200);
+    expect(response?.headers()['x-robots-tag']).toBe('noindex, nofollow');
+    await expect(page.locator('h1')).toHaveCount(1);
+    await page.setViewportSize({ width: 320, height: 800 });
+    expect(
+      await page.evaluate(
+        () => document.documentElement.scrollWidth <= innerWidth,
+      ),
+    ).toBe(true);
+  }
+  expect((await request.get('/post/missing-guide')).status()).toBe(404);
+  expect(errors).toEqual([]);
+});
+
+test('portfolio supports swipe and restores focus when closed', async ({
+  page,
+}) => {
+  await page.goto('/portfolio?tab=baby');
+  const opener = page.locator('.gallery-open').first();
+  await opener.click();
+  const dialog = page.getByRole('dialog');
+  await dialog.locator('.lightbox-content').dispatchEvent('touchstart', {
+    touches: [{ identifier: 1, clientX: 280, clientY: 300 }],
+  });
+  await dialog.locator('.lightbox-content').dispatchEvent('touchend', {
+    changedTouches: [{ identifier: 1, clientX: 100, clientY: 305 }],
+  });
+  await expect(dialog.locator('[aria-live]')).toContainText('2 /');
+  await page.keyboard.press('Escape');
+  await expect(opener).toBeFocused();
+});

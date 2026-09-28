@@ -4,6 +4,7 @@ import { settings } from './settings';
 export const homepage: Homepage = {
   id: 'homepage',
   hero: {
+    images: [images.location, images.newborn0, images.maternity0],
     eyebrow: 'FAMILY PHOTOGRAPHY · DURHAM & THE NORTH EAST',
     heading: 'Little moments.',
     accent: 'Everything to you.',
@@ -14,6 +15,11 @@ export const homepage: Homepage = {
     footnote: 'STUDIO & LOCATION PHOTOGRAPHY',
     motto: 'Made personal. Kept forever.',
     photoCaption: 'A little of life, held still.',
+  },
+  awards: {
+    heading: 'Photographs made with care. Recognised with pride.',
+    copy: 'I’m grateful to have my work recognised by photography awards. The little people in front of my camera always come first.',
+    articleSlug: 'we-won-an-award',
   },
   introduction: {
     eyebrow: 'A LITTLE ABOUT ME',

@@ -1,6 +1,13 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { getServiceBySlug, getHomepage, getSiteSettings } from '@/content';
+import {
+  getServiceBySlug,
+  getHomepage,
+  getSiteSettings,
+  getArticles,
+} from '@/content';
+import { portfolioHref, guideSlugsForService } from '@/content/navigation';
+import { ArticleCards } from '@/components/ArticleCards';
 import { Photo } from '@/components/Photo';
 import { Gallery } from '@/components/Gallery';
 import { Testimonials, FinalCta } from '@/components/Sections';
@@ -25,6 +32,9 @@ export default async function ServicePage({ params }: Props) {
     getHomepage(),
     getSiteSettings(),
   ]);
+  const guides = (await getArticles()).filter((a) =>
+    guideSlugsForService(slug).includes(a.slug),
+  );
   return (
     <main id="main">
       <script
@@ -76,7 +86,21 @@ export default async function ServicePage({ params }: Props) {
           <p className="eyebrow">YOUR STORY, THROUGH MY LENS</p>
           <h1>{service.title}</h1>
           <p className="service-tagline">{service.description}</p>
-          <p>{service.introduction}</p>
+          {service.introduction.split(/\n\n/).map((paragraph, n) => (
+            <p key={n}>{paragraph}</p>
+          ))}
+          {service.sections
+            .flatMap((section) => section.paragraphs)
+            .map((paragraph, n) => (
+              <p key={n}>{paragraph}</p>
+            ))}
+          <nav
+            className="service-shortcuts"
+            aria-label="Explore this photo shoot"
+          >
+            <Link href="#prices">View prices ↓</Link>
+            <Link href={portfolioHref(slug)}>View portfolio ↗</Link>
+          </nav>
           <Link className="button" href={service.cta.href}>
             {service.cta.label}
             <span aria-hidden="true">↗</span>
@@ -93,41 +117,12 @@ export default async function ServicePage({ params }: Props) {
       {service.reviewNote && !isProduction && (
         <aside className="review-note container">{service.reviewNote}</aside>
       )}
-      {service.sections.length > 0 && (
-        <section className="service-story section container">
-          {service.sections.map((s) => (
-            <div className="story-row" key={s.id}>
-              <h2>{s.heading}</h2>
-              <div>
-                {s.paragraphs.map((p) => (
-                  <p key={p}>{p}</p>
-                ))}
-              </div>
-            </div>
-          ))}
-        </section>
-      )}
-      {service.gallery?.images.length > 0 && (
-        <section className="section container service-gallery">
-          <div className="section-heading">
-            <div>
-              <p className="eyebrow">A FEW FAVOURITE CAPTURES</p>
-              <h2>{service.gallery.title}</h2>
-            </div>
-            <span className="gallery-count">
-              {String(service.gallery.images.length).padStart(2, '0')}{' '}
-              PHOTOGRAPHS
-            </span>
-          </div>
-          <Gallery gallery={service.gallery} />
-        </section>
-      )}
       {service.packages.length > 0 && (
-        <section className="packages-section section">
+        <section id="prices" className="packages-section section">
           <div className="container">
             <div className="center-heading">
               <p className="eyebrow">YOUR PHOTO SHOOT</p>
-              <h2>A little something to treasure.</h2>
+              <h2>Prices &amp; packages</h2>
               <p>Choose the photo shoot that suits you.</p>
             </div>
             <p className="review-note">{service.pricingNote}</p>
@@ -159,6 +154,50 @@ export default async function ServicePage({ params }: Props) {
               ))}
             </div>
           </div>
+        </section>
+      )}
+      {service.packages.length === 0 && (
+        <section id="prices" className="packages-section section">
+          <div className="container">
+            <h2>Prices &amp; packages</h2>
+            <p>
+              Please get in touch for current prices and a photo shoot tailored
+              to you.
+            </p>
+            <Link className="button" href="/#enquire">
+              Ask about prices ↗
+            </Link>
+          </div>
+        </section>
+      )}
+      {service.gallery?.images.length > 0 && (
+        <section className="section container service-gallery">
+          <div className="section-heading">
+            <div>
+              <p className="eyebrow">A FEW FAVOURITE CAPTURES</p>
+              <h2>{service.gallery.title}</h2>
+            </div>
+            <span className="gallery-count">
+              {String(service.gallery.images.length).padStart(2, '0')}{' '}
+              PHOTOGRAPHS
+            </span>
+          </div>
+          <Gallery
+            gallery={{
+              ...service.gallery,
+              images: service.gallery.images.slice(0, 3),
+            }}
+          />
+          <Link className="button portfolio-cta" href={portfolioHref(slug)}>
+            Browse the full {service.title.toLowerCase()} portfolio ↗
+          </Link>
+        </section>
+      )}
+      {guides.length > 0 && (
+        <section className="section container">
+          <p className="eyebrow">BEFORE & AFTER YOUR PHOTO SHOOT</p>
+          <h2>A little useful reading.</h2>
+          <ArticleCards articles={guides} />
         </section>
       )}
       {service.faqs.length > 0 && (

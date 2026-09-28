@@ -568,3 +568,7 @@ Corporate and Landscape remain excluded from the seven-service navigation. Traff
 ## Cloudflare preview — 28 September 2026
 
 Cloudflare Workers is the intended production host. The temporary review site is https://thewhitleycaptures-preview.thewhitleycaptures.workers.dev, with authenticated Sanity Studio at `/studio`. It uses vinext alongside the unchanged local Next.js workflow. Hosted draft preview is configured with a server-only Viewer secret and an exact credential-enabled Sanity CORS origin. The public preview remains noindex/nofollow; no custom domain, DNS, nameserver or Webflow change has been made. See [HOSTING.md](HOSTING.md) for exact build settings, variables and the separately approved cutover process.
+
+## Rachel’s pre-launch review update
+
+Implemented `/portfolio` with category query links for the seven current services, `/client-guides`, and preserved `/post/we-won-an-award`, `/post/our-backdrop-library`, `/post/our-baby-photo-shoot-beanbag-backdrop-library` and `/post/a-guide-to-printing-your-images`. These four article routes are now implemented rather than deferred. Other blog articles and Corporate/Landscape/Mini-Shoots still require explicit migration decisions. The awards article's baby-led cross-link points to the new Baby & Newborn page for this milestone. See REVIEW-UPDATE.md for content provenance and guarded migration behaviour, and RACHEL-REVIEW.md for the review checklist. All routes remain preview/noindex; no domain cutover was performed.

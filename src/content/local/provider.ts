@@ -1,4 +1,6 @@
 import 'server-only';
+import articles from './articles.json' with { type: 'json' };
+import type { Article } from '../types';
 import type { ContentProvider } from '../types';
 import { settings } from './settings';
 import { homepage } from './homepage';
@@ -11,6 +13,21 @@ function resolve<T extends { id: string }>(items: T[], id: string): T {
   return item;
 }
 export const localProvider: ContentProvider = {
+  async getArticles() {
+    return articles as Article[];
+  },
+  async getArticleBySlug(slug) {
+    return (articles as Article[]).find((a) => a.slug === slug) || null;
+  },
+  async getPortfolio() {
+    return Promise.all(
+      services.map(async (s) => ({
+        ...s,
+        gallery: resolve(galleries, s.galleryId),
+        testimonials: s.testimonialIds.map((id) => resolve(testimonials, id)),
+      })),
+    );
+  },
   async getSiteSettings() {
     return settings;
   },

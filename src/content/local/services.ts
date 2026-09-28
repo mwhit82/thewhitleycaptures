@@ -1,3 +1,4 @@
+import reviewIntroductions from './review-introductions.json' with { type: 'json' };
 import type { Service } from '../types';
 import i from './images.json' with { type: 'json' };
 const summaries = [
@@ -387,3 +388,14 @@ services.find((service) => service.id === 'cake-smash-bath')!.testimonialIds = [
   'cake-smash-bath-review-1',
   'cake-smash-bath-review-2',
 ];
+
+export const originalServiceCopy = services.map((s) => ({
+  id: s.id,
+  introduction: s.introduction,
+  sections: JSON.parse(JSON.stringify(s.sections)),
+}));
+for (const service of services) {
+  service.introduction =
+    reviewIntroductions[service.slug as keyof typeof reviewIntroductions];
+  service.sections = [];
+}

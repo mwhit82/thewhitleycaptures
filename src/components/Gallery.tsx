@@ -3,6 +3,7 @@ import { useRef, useState } from 'react';
 import type { Gallery as GalleryContent } from '@/content/types';
 import { Photo } from './Photo';
 export function Gallery({ gallery }: { gallery: GalleryContent }) {
+  const touchStart = useRef<{ x: number; y: number } | null>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [index, setIndex] = useState(0);
   const dialog = useRef<HTMLDialogElement>(null);
@@ -64,7 +65,23 @@ export function Gallery({ gallery }: { gallery: GalleryContent }) {
           }
         }}
       >
-        <div className="lightbox-content">
+        <div
+          className="lightbox-content"
+          onTouchStart={(e) => {
+            const t = e.touches[0];
+            touchStart.current = { x: t.clientX, y: t.clientY };
+          }}
+          onTouchEnd={(e) => {
+            const start = touchStart.current;
+            touchStart.current = null;
+            if (!start) return;
+            const t = e.changedTouches[0];
+            const dx = t.clientX - start.x,
+              dy = t.clientY - start.y;
+            if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5)
+              move(dx < 0 ? 1 : -1);
+          }}
+        >
           <button
             autoFocus
             className="lightbox-close"

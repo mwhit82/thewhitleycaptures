@@ -29,6 +29,7 @@ export function createStudioConfig(previewEnabled: boolean) {
                 'Photography services',
               ),
               S.documentTypeListItem('gallery').title('Photo galleries'),
+              S.documentTypeListItem('article').title('Client guides & awards'),
               S.documentTypeListItem('testimonial').title('Testimonials'),
               S.listItem()
                 .title('Site settings')
@@ -51,6 +52,19 @@ export function createStudioConfig(previewEnabled: boolean) {
                 locations: {
                   homepage: defineLocations({
                     locations: [{ title: 'Homepage', href: '/' }],
+                  }),
+                  article: defineLocations({
+                    select: { title: 'title', slug: 'slug.current' },
+                    resolve: (doc) => ({
+                      locations: doc?.slug
+                        ? [
+                            {
+                              title: doc.title || 'Article',
+                              href: `/post/${doc.slug}`,
+                            },
+                          ]
+                        : [],
+                    }),
                   }),
                   photographyService: defineLocations({
                     select: { title: 'title', slug: 'slug.current' },

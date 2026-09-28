@@ -6,6 +6,8 @@ import type { ContentProvider } from '../types';
 import { resolveImages } from './images';
 import {
   settingsQuery,
+  articlesQuery,
+  articleQuery,
   homepageQuery,
   servicesQuery,
   serviceQuery,
@@ -33,6 +35,11 @@ function required<T>(value: T | null, area: string): T {
   return value;
 }
 export const sanityProvider: ContentProvider = {
+  getArticles: cache(async () => query(articlesQuery)),
+  getArticleBySlug: cache(async (slug: string) =>
+    query(articleQuery, { slug }),
+  ),
+  getPortfolio: cache(async () => query(servicesQuery)),
   getSiteSettings: cache(async () =>
     required(
       await query<Awaited<

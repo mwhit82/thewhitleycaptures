@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { reviewLinks } from '@/content/navigation';
 import { Photo } from './Photo';
 import type { SiteSettings } from '@/content/types';
 export function Footer({ settings }: { settings: SiteSettings }) {
@@ -20,6 +21,11 @@ export function Footer({ settings }: { settings: SiteSettings }) {
           </a>
         </div>
         <div className="footer-socials">
+          {reviewLinks.map((link) => (
+            <Link key={link.href} href={link.href}>
+              {link.label}
+            </Link>
+          ))}
           {settings.socials.map((s) => (
             <a href={s.href} key={s.href}>
               {s.label} <span aria-hidden="true">↗</span>

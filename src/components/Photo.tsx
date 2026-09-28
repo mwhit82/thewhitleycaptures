@@ -20,11 +20,13 @@ export function Photo({
   className = '',
   sizes = '100vw',
   priority = false,
+  onLoad,
 }: {
   image: ContentImage | null | undefined;
   className?: string;
   sizes?: string;
   priority?: boolean;
+  onLoad?: () => void;
 }) {
   if (!image?.src || !image.width || !image.height)
     return (
@@ -36,6 +38,7 @@ export function Photo({
     );
   return (
     <Image
+      onLoad={onLoad}
       src={image.src}
       loader={
         image.src.startsWith('https://cdn.sanity.io/')

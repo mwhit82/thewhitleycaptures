@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { getHomepage, getSiteSettings } from '@/content';
+import { HeroSlideshow } from '@/components/HeroSlideshow';
 import { Photo } from '@/components/Photo';
 import {
   Enquiry,
@@ -73,11 +74,7 @@ export default async function Home() {
           </p>
         </div>
         <div className="hero-photo">
-          <Photo
-            image={home.hero.image}
-            priority
-            sizes="(max-width: 700px) 100vw, 60vw"
-          />
+          <HeroSlideshow images={home.hero.images} fallback={home.hero.image} />
           <div className="photo-caption">
             <span>{settings.name.toUpperCase()}</span>
             <span>{home.hero.photoCaption}</span>
@@ -122,6 +119,16 @@ export default async function Home() {
             </div>
             <Gallery gallery={home.featured.gallery} />
           </div>
+        </section>
+      )}
+      {home.awards?.articleSlug && (
+        <section className="awards-section section container">
+          <p className="eyebrow">A LITTLE RECOGNITION</p>
+          <h2>{home.awards.heading}</h2>
+          <p>{home.awards.copy}</p>
+          <Link className="text-link" href={`/post/${home.awards.articleSlug}`}>
+            My awards and the stories behind them ↗
+          </Link>
         </section>
       )}
       <Testimonials

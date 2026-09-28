@@ -1,11 +1,12 @@
+import portfolio from './portfolio-images.json' with { type: 'json' };
 import type { Gallery } from '../types';
 import i from './images.json' with { type: 'json' };
 export const galleries: Gallery[] = [
   {
     id: 'featured',
     title: 'A few favourite moments',
-    images: [i.gallery3, i.woodland, i.newborn0],
-    featuredImageIds: ['gallery3', 'woodland', 'newborn0'],
+    images: [i.gallery3, i.gallery2, i.newborn0],
+    featuredImageIds: ['gallery3', 'gallery2', 'newborn0'],
   },
   {
     id: 'baby-newborn',
@@ -39,3 +40,13 @@ export const galleries: Gallery[] = [
     featuredImageIds: [image.id],
   })),
 ];
+
+for (const gallery of galleries) {
+  const extra = portfolio[gallery.id as keyof typeof portfolio] || [];
+  gallery.images = [
+    ...gallery.images,
+    ...extra.filter(
+      (image) => !gallery.images.some((existing) => existing.id === image.id),
+    ),
+  ];
+}

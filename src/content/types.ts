@@ -5,6 +5,8 @@ export type ContentImage = {
   height: number;
   alt: string;
   caption?: string;
+  sourceUrl?: string;
+  sourcePage?: string;
   position?: { x: number; y: number };
 };
 export type Link = { label: string; href: string };
@@ -77,12 +79,14 @@ export type Homepage = {
     accent: string;
     copy: string;
     image: ContentImage;
+    images?: ContentImage[];
     cta: Link;
     secondaryCta: Link;
     footnote?: string;
     motto?: string;
     photoCaption?: string;
   };
+  awards?: { heading: string; copy: string; articleSlug: string };
   introduction: {
     eyebrow: string;
     heading: string;
@@ -103,6 +107,9 @@ export type ServicePageContent = Service & {
   testimonials: Testimonial[];
 };
 export interface ContentProvider {
+  getArticles(): Promise<Article[]>;
+  getArticleBySlug(slug: string): Promise<Article | null>;
+  getPortfolio(): Promise<ServicePageContent[]>;
   getSiteSettings(): Promise<SiteSettings>;
   getHomepage(): Promise<
     Homepage & {
@@ -114,3 +121,21 @@ export interface ContentProvider {
   getServices(): Promise<Service[]>;
   getServiceBySlug(slug: string): Promise<ServicePageContent | null>;
 }
+
+export type ArticleBlock = {
+  id: string;
+  kind: 'heading' | 'paragraph' | 'gallery';
+  spans?: { text: string; href?: string }[];
+  images?: ContentImage[];
+};
+export type Article = {
+  id: string;
+  slug: string;
+  title: string;
+  summary: string;
+  kind: 'guide' | 'awards';
+  blocks: ArticleBlock[];
+  sourceUrl: string;
+  reviewNote?: string;
+  seo: Seo;
+};

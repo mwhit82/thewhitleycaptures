@@ -62,3 +62,7 @@ Required headings, links, email and prices are checked before publishing. Option
 Use ordinary Draft → Publish. The advanced Releases tool is hidden because it is not part of this site’s preview workflow.
 
 If Studio shows **Preview setup**, editing and saving are available, but draft preview is not ready. The developer must configure `SANITY_API_READ_TOKEN` with Viewer access, use Sanity content mode, and restart the server. Studio then offers **Preview website** automatically. Only the readiness flag reaches the browser; the token stays on the server. The website link on the setup screen displays published content, not drafts.
+
+## Rachel’s review update
+
+The homepage now supports three ordered hero photographs and an awards introduction. Photo galleries supply the complete portfolio and the first three service-page photographs. Client guides and awards have their own Studio collection, preserved page addresses and draft-preview links. See [Rachel’s review guide](RACHEL-REVIEW.md) for editing steps and the pre-launch content checklist. The migration never replaces existing articles or drafts; see [migration details](REVIEW-UPDATE.md).

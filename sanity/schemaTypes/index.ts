@@ -1,3 +1,4 @@
+import { reviewSchemas } from './review';
 import type { SchemaTypeDefinition, DocumentDefinition, Rule } from 'sanity';
 // Shared by embedded Studio and the one-time content migration.
 const string = (name: string, title: string) => ({
@@ -42,6 +43,7 @@ const link = (name: string, title: string) => ({
   validation: (rule: Rule) => rule.required(),
 });
 export const schemaTypes: SchemaTypeDefinition[] = [
+  ...reviewSchemas,
   {
     name: 'photograph',
     title: 'Photograph',
@@ -68,6 +70,18 @@ export const schemaTypes: SchemaTypeDefinition[] = [
             .warning('Add a description to make this photograph accessible.'),
       },
       string('caption', 'Optional caption'),
+      {
+        name: 'sourceUrl',
+        title: 'Original image URL',
+        type: 'url',
+        readOnly: true,
+      },
+      {
+        name: 'sourcePage',
+        title: 'Original page URL',
+        type: 'url',
+        readOnly: true,
+      },
     ],
     description:
       'Describe what is in the photograph. Use the hotspot to choose the focus when the photograph is cropped.',
@@ -224,12 +238,37 @@ export const schemaTypes: SchemaTypeDefinition[] = [
           string('heading', 'Main heading'),
           string('accent', 'Second heading line'),
           text('copy', 'Introduction'),
-          image('image', 'Main photograph'),
+          image('image', 'Fallback photograph'),
+          {
+            name: 'images',
+            title: 'Hero slideshow photographs',
+            description:
+              'Choose three photographs and drag to change their order. The first loads immediately. Leave empty to use the fallback photograph.',
+            type: 'array',
+            of: [{ type: 'photograph' }],
+            validation: (r: Rule) => r.max(3),
+          },
           link('cta', 'Main link'),
           link('secondaryCta', 'Second link'),
           string('footnote', 'Small footer line'),
           string('motto', 'Short motto'),
           string('photoCaption', 'Photograph caption'),
+        ],
+      },
+      {
+        name: 'awards',
+        title: 'Awards introduction',
+        type: 'object',
+        fields: [
+          string('heading', 'Heading'),
+          text('copy', 'Introduction'),
+          {
+            name: 'article',
+            title: 'Awards article',
+            type: 'reference',
+            to: [{ type: 'article' }],
+            options: { filter: 'kind == "awards"' },
+          },
         ],
       },
       {
@@ -326,10 +365,13 @@ export const schemaTypes: SchemaTypeDefinition[] = [
       text('description', 'Short introduction'),
       image('cardImage', 'Homepage card photograph'),
       image('hero', 'Main photograph'),
-      text('introduction', 'Introduction'),
+      {
+        ...text('introduction', 'Introduction'),
+        description: 'Opening copy shown beside the service photograph.',
+      },
       {
         name: 'sections',
-        title: 'Text sections',
+        title: 'Additional introduction paragraphs',
         type: 'array',
         of: [{ type: 'contentSection' }],
       },
