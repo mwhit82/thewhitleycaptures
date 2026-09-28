@@ -54,7 +54,7 @@ Generated `dist`, `.wrangler` and `.vinext` folders are ignored. The Cloudflare 
 
 ## CLOUDFLARE SETTINGS TO ENTER
 
-These are the settings for connecting the **existing preview Worker** to `mwhit82/thewhitleycaptures` under Settings → Builds. The manual deployment is working; automatic Git builds have not yet been enabled or verified.
+These are the settings for connecting the **existing preview Worker** to `mwhit82/thewhitleycaptures` under Settings → Builds. GitHub was connected on 28 September 2026 with Node 24 and branch preview builds disabled. The first push after connection verifies automatic deployment.
 
 | Setting                                 | Value                                                             |
 | --------------------------------------- | ----------------------------------------------------------------- |
@@ -70,7 +70,7 @@ These are the settings for connecting the **existing preview Worker** to `mwhit8
 | Compatibility flag                      | `nodejs_compat`                                                   |
 | Custom domain / routes                  | None                                                              |
 
-The dashboard's “production branch” means the branch deploying this temporary Worker, not the Webflow site. Once connected, a push to main should build and update this Worker. Verify the first Git-triggered build. Branch builds remain disabled; Sanity provides Rachel's content-preview workflow. `preview_urls` is also false in Wrangler; the preview command is only a dormant dashboard setting.
+The dashboard's “production branch” means the branch deploying this temporary Worker, not the Webflow site. A push to main triggers a build and updates this Worker. Check Deployments in Cloudflare for build results. Branch builds remain disabled; Sanity provides Rachel's content-preview workflow. `preview_urls` is also false in Wrangler; the preview command is only a dormant dashboard setting.
 
 ### Variables and secrets
 
