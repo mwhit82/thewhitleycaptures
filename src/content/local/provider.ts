@@ -1,4 +1,5 @@
 import 'server-only';
+import { about } from './about';
 import articles from './articles.json' with { type: 'json' };
 import type { Article } from '../types';
 import type { ContentProvider } from '../types';
@@ -13,6 +14,9 @@ function resolve<T extends { id: string }>(items: T[], id: string): T {
   return item;
 }
 export const localProvider: ContentProvider = {
+  async getAboutPage() {
+    return about;
+  },
   async getArticles() {
     return articles as Article[];
   },

@@ -7,7 +7,7 @@ import {
   getSiteSettings,
   getArticles,
 } from '@/content';
-import { portfolioHref, guideSlugsForService } from '@/content/navigation';
+import { guideSlugsForService } from '@/content/navigation';
 import { ArticleCards } from '@/components/ArticleCards';
 import { Photo } from '@/components/Photo';
 import { Gallery } from '@/components/Gallery';
@@ -102,7 +102,7 @@ export default async function ServicePage({ params }: Props) {
             <Link href="#prices">
               View prices <ArrowIcon direction="down" />
             </Link>
-            <Link href={portfolioHref(slug)}>
+            <Link href="#gallery">
               View portfolio <ArrowIcon direction="up-right" />
             </Link>
           </nav>
@@ -182,10 +182,10 @@ export default async function ServicePage({ params }: Props) {
         </section>
       )}
       {service.gallery?.images.length > 0 && (
-        <section className="section container service-gallery">
+        <section id="gallery" className="section container service-gallery">
           <div className="section-heading">
             <div>
-              <p className="eyebrow">A FEW FAVOURITE CAPTURES</p>
+              <p className="eyebrow">THROUGH MY LENS</p>
               <h2>{service.gallery.title}</h2>
             </div>
             <span className="gallery-count">
@@ -193,16 +193,7 @@ export default async function ServicePage({ params }: Props) {
               PHOTOGRAPHS
             </span>
           </div>
-          <Gallery
-            gallery={{
-              ...service.gallery,
-              images: service.gallery.images.slice(0, 3),
-            }}
-          />
-          <Link className="button portfolio-cta" href={portfolioHref(slug)}>
-            Browse the full {service.title.toLowerCase()} portfolio{' '}
-            <ArrowIcon direction="up-right" />
-          </Link>
+          <Gallery gallery={service.gallery} />
         </section>
       )}
       {guides.length > 0 && (

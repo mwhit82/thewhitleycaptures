@@ -28,3 +28,5 @@ const article = `{ "id": _id, "slug": slug.current, title, summary, kind, source
  "blocks": coalesce(blocks[]{"id": _key, kind, spans[]{text,href}, "images": coalesce(images[defined(asset->url)]${photo}, [])}, []), "seo": seo${seo} }`;
 export const articlesQuery = `*[_type == "article"] | order(title asc) ${article}`;
 export const articleQuery = `*[_type == "article" && slug.current == $slug][0]${article}`;
+
+export const aboutQuery = `*[_type == "aboutPage" && _id == "about-rachel"][0]{"id": _id, heading, "paragraphs": coalesce(paragraphs, []), "portrait": portrait${photo}, closingHeading, cta, "seo": seo${seo}}`;

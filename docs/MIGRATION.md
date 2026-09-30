@@ -572,3 +572,7 @@ Cloudflare Workers is the intended production host. The temporary review site is
 ## Rachel’s pre-launch review update
 
 Implemented `/portfolio` with category query links for the seven current services, `/client-guides`, and preserved `/post/we-won-an-award`, `/post/our-backdrop-library`, `/post/our-baby-photo-shoot-beanbag-backdrop-library` and `/post/a-guide-to-printing-your-images`. These four article routes are now implemented rather than deferred. Other blog articles and Corporate/Landscape/Mini-Shoots still require explicit migration decisions. The awards article's baby-led cross-link points to the new Baby & Newborn page for this milestone. See REVIEW-UPDATE.md for content provenance and guarded migration behaviour, and RACHEL-REVIEW.md for the review checklist. All routes remain preview/noindex; no domain cutover was performed.
+
+## Rachel’s layout update — 30 September 2026
+
+`/about-me` is an editable singleton page seeded from the existing published introduction and portrait. `/portfolio` now redirects to `/#photography`; supported category queries redirect to the matching service URL with `#gallery`, including current slugs and legacy aliases. These are temporary redirects during review. Corporate, Landscape, Mini-Shoots and unknown queries retain an explicit unavailable message, with no unrelated redirect. The production sitemap includes About and omits the obsolete portfolio landing page. Full galleries now live beneath service prices. The old homepage featured copy/gallery remains in Sanity as unused content.

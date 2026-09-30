@@ -1796,3 +1796,31 @@ body:has(.lightbox[open]) {
     max-height: 52rem !important;
   }
 }
+
+.service-gallery .gallery {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: start;
+}
+.service-gallery .gallery figure {
+  margin-top: 0;
+  transform: none;
+}
+.service-gallery .gallery img {
+  height: auto;
+  aspect-ratio: auto;
+}
+.about-page h1 {
+  font-size: clamp(2.8rem, 5vw, 5rem);
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+}
+@media (max-width: 1000px) {
+  .service-gallery .gallery {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 600px) {
+  .service-gallery .gallery {
+    grid-template-columns: 1fr;
+  }
+}

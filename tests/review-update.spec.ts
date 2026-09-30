@@ -56,15 +56,23 @@ test('reduced motion keeps the hero still with manual access', async ({
     r.getByRole('button', { name: /Show photograph 3:/ }),
   ).toHaveAttribute('aria-pressed', 'true');
 });
-test('prices precede selected galleries and every service links to its portfolio', async ({
+test('prices precede full galleries and services link within the page', async ({
   page,
 }) => {
   for (const s of services) {
     await page.goto(`/prices/${s.slug}`);
     await expect(page.locator('.service-story')).toHaveCount(0);
+    const count = Number(
+      (await page.locator('.gallery-count').innerText()).match(/\d+/)?.[0],
+    );
+    await expect(page.locator('.service-gallery .gallery-open')).toHaveCount(
+      count,
+    );
+    expect(count).toBeGreaterThan(0);
+    await expect(page.locator('.portfolio-cta')).toHaveCount(0);
     await expect(
       page.getByRole('link', { name: 'View portfolio', exact: false }),
-    ).toHaveAttribute('href', portfolioHref(s.slug));
+    ).toHaveAttribute('href', '#gallery');
     expect(
       await page
         .locator('#prices')
@@ -87,18 +95,25 @@ test('portfolio category links, nested refresh, unsupported categories and new p
   page.on('pageerror', (e) => errors.push(e.message));
   for (const s of services) {
     await page.goto(portfolioHref(s.slug));
-    await expect(
-      page.locator('.portfolio-nav [aria-current="page"]'),
-    ).toHaveText(s.title);
+    await expect(page).toHaveURL(new RegExp(`/prices/${s.slug}#gallery$`));
+    await expect(page.locator('h1')).toHaveText(s.title);
     await expect(page.locator('.gallery-open').first()).toBeVisible();
   }
   await page.reload();
-  await expect(page.locator('h1')).toHaveText('My portfolio');
-  await page.goto('/portfolio?tab=corporate');
-  await expect(
-    page.getByText('This collection isn’t available in the preview yet.'),
-  ).toBeVisible();
+  await expect(page.locator('h1')).toHaveText(
+    services[services.length - 1].title,
+  );
+  await page.goto('/portfolio');
+  await expect(page).toHaveURL(/\/#photography$/);
+  for (const tab of ['corporate', 'landscape', 'mini-shoots', 'unknown']) {
+    await page.goto(`/portfolio?tab=${tab}`);
+    await expect(
+      page.getByText('This collection isn’t available in the preview yet.'),
+    ).toBeVisible();
+    await expect(page).toHaveURL(new RegExp(`tab=${tab}$`));
+  }
   for (const path of [
+    '/about-me',
     '/client-guides',
     ...articles.map((a) => `/post/${a.slug}`),
   ]) {
@@ -133,4 +148,28 @@ test('portfolio supports swipe and restores focus when closed', async ({
   await expect(dialog.locator('[aria-live]')).toContainText('2 /');
   await page.keyboard.press('Escape');
   await expect(opener).toBeFocused();
+});
+
+test('homepage puts enquiry after services and links to editable About page', async ({
+  page,
+}) => {
+  await page.goto('/');
+  await expect(page.locator('.featured-section')).toHaveCount(0);
+  await expect(page.locator('a[href="/portfolio"]')).toHaveCount(0);
+  expect(
+    await page
+      .locator('#photography')
+      .evaluate((el) =>
+        Boolean(
+          el.compareDocumentPosition(document.querySelector('#enquire')!) &
+          Node.DOCUMENT_POSITION_FOLLOWING,
+        ),
+      ),
+  ).toBe(true);
+  await page.getByRole('link', { name: 'More about me' }).click();
+  await expect(page).toHaveURL(/about-me$/);
+  await expect(page.locator('h1')).toHaveText('A little about me');
+  await expect(
+    page.getByRole('heading', { name: 'Small moments. Lasting keepsakes.' }),
+  ).toBeVisible();
 });

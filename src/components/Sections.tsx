@@ -76,11 +76,6 @@ export function ServiceGrid({
           </Link>
         ))}
       </div>
-      <p className="portfolio-entrance">
-        <Link className="text-link" href="/portfolio">
-          Explore the full portfolio <ArrowIcon />
-        </Link>
-      </p>
     </section>
   );
 }

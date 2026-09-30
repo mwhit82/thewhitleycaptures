@@ -1,5 +1,5 @@
 export const reviewLinks = [
-  { label: 'Portfolio', href: '/portfolio' },
+  { label: 'About Rachel', href: '/about-me' },
   { label: 'Client guides', href: '/client-guides' },
   { label: 'Awards', href: '/post/we-won-an-award' },
 ];

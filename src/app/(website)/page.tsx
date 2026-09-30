@@ -9,7 +9,6 @@ import {
   Testimonials,
   FinalCta,
 } from '@/components/Sections';
-import { Gallery } from '@/components/Gallery';
 import { pageMetadata, jsonLd, siteUrl } from '@/lib/seo';
 export async function generateMetadata() {
   const [home, settings] = await Promise.all([
@@ -103,31 +102,15 @@ export default async function Home() {
             <p key={p}>{p}</p>
           ))}
           <span className="signature">{home.introduction.signature}</span>
+          <p>
+            <Link className="text-link" href="/about-me">
+              More about me <ArrowIcon />
+            </Link>
+          </p>
         </div>
       </section>
-      <Enquiry content={home.enquiry} email={settings.email} />
       <ServiceGrid content={home.services} services={home.services.items} />
-      {home.featured?.gallery?.images.length > 0 && (
-        <section className="featured-section section">
-          <div className="container">
-            <div className="section-heading">
-              <div>
-                <p className="eyebrow">{home.featured.eyebrow}</p>
-                <h2>{home.featured.heading}</h2>
-              </div>
-              {home.featured.cta?.href && (
-                <Link className="text-link" href={home.featured.cta.href}>
-                  {home.featured.cta.label}
-                  <span aria-hidden="true">
-                    <ArrowIcon direction="up-right" />
-                  </span>
-                </Link>
-              )}
-            </div>
-            <Gallery gallery={home.featured.gallery} />
-          </div>
-        </section>
-      )}
+      <Enquiry content={home.enquiry} email={settings.email} />
       {home.awards?.articleSlug && (
         <section
           className={`awards-section section container ${home.awards.image?.src ? 'has-image' : ''}`}

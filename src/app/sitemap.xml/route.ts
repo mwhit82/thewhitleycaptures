@@ -8,7 +8,7 @@ export async function GET() {
     });
   const paths = [
     '/',
-    '/portfolio',
+    '/about-me',
     '/client-guides',
     ...(await getArticles()).map((a) => `/post/${a.slug}`),
     ...(await getServices()).map((s) => `/prices/${s.slug}`),

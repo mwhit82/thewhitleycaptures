@@ -111,7 +111,17 @@ export type ServicePageContent = Service & {
   gallery: Gallery;
   testimonials: Testimonial[];
 };
+export type AboutPage = {
+  id: string;
+  heading: string;
+  paragraphs: string[];
+  portrait: ContentImage;
+  closingHeading: string;
+  cta: Link;
+  seo: Seo;
+};
 export interface ContentProvider {
+  getAboutPage(): Promise<AboutPage | null>;
   getArticles(): Promise<Article[]>;
   getArticleBySlug(slug: string): Promise<Article | null>;
   getPortfolio(): Promise<ServicePageContent[]>;

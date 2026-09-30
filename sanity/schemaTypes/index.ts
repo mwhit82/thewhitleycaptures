@@ -45,6 +45,20 @@ const link = (name: string, title: string) => ({
 export const schemaTypes: SchemaTypeDefinition[] = [
   ...reviewSchemas,
   {
+    name: 'aboutPage',
+    title: 'About Rachel',
+    type: 'document',
+    preview: { prepare: () => ({ title: 'About Rachel' }) },
+    fields: [
+      string('heading', 'Page heading'),
+      strings('paragraphs', 'About me paragraphs'),
+      image('portrait', 'Portrait'),
+      string('closingHeading', 'Closing heading'),
+      link('cta', 'Enquiry link'),
+      { name: 'seo', title: 'Search and sharing', type: 'seo' },
+    ],
+  },
+  {
     name: 'photograph',
     title: 'Photograph',
     type: 'image',
@@ -317,7 +331,9 @@ export const schemaTypes: SchemaTypeDefinition[] = [
       },
       {
         name: 'featured',
-        title: 'Featured photography',
+        title: 'Unused homepage photo strip (retained)',
+        description:
+          'No longer displayed on the homepage. Kept here so the original copy and gallery can be recovered.',
         type: 'object',
         fields: [
           string('eyebrow', 'Small heading'),

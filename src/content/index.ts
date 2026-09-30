@@ -9,6 +9,7 @@ if (!['sanity', 'local'].includes(contentSource))
   throw new Error('CONTENT_SOURCE must be sanity or local');
 const provider = contentSource === 'sanity' ? sanityProvider : localProvider;
 export const {
+  getAboutPage,
   getSiteSettings,
   getHomepage,
   getServices,

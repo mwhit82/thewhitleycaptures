@@ -5,6 +5,7 @@ import { getSanityClient } from './client';
 import type { ContentProvider } from '../types';
 import { resolveImages } from './images';
 import {
+  aboutQuery,
   settingsQuery,
   articlesQuery,
   articleQuery,
@@ -35,6 +36,7 @@ function required<T>(value: T | null, area: string): T {
   return value;
 }
 export const sanityProvider: ContentProvider = {
+  getAboutPage: cache(async () => query(aboutQuery)),
   getArticles: cache(async () => query(articlesQuery)),
   getArticleBySlug: cache(async (slug: string) =>
     query(articleQuery, { slug }),

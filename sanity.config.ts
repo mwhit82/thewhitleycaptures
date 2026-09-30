@@ -4,7 +4,7 @@ import { structureTool } from 'sanity/structure';
 import { presentationTool, defineLocations } from 'sanity/presentation';
 import { PreviewSetup } from './src/components/PreviewSetup';
 import { schemaTypes } from './sanity/schemaTypes';
-const singletons = new Set(['homepage', 'siteSettings']);
+const singletons = new Set(['homepage', 'siteSettings', 'aboutPage']);
 export function createStudioConfig(previewEnabled: boolean) {
   return defineConfig({
     name: 'whitley',
@@ -24,6 +24,13 @@ export function createStudioConfig(previewEnabled: boolean) {
                 .title('Homepage')
                 .child(
                   S.document().schemaType('homepage').documentId('homepage'),
+                ),
+              S.listItem()
+                .title('About Rachel')
+                .child(
+                  S.document()
+                    .schemaType('aboutPage')
+                    .documentId('about-rachel'),
                 ),
               S.documentTypeListItem('photographyService').title(
                 'Photography services',
@@ -50,6 +57,9 @@ export function createStudioConfig(previewEnabled: boolean) {
               },
               resolve: {
                 locations: {
+                  aboutPage: defineLocations({
+                    locations: [{ title: 'About Rachel', href: '/about-me' }],
+                  }),
                   homepage: defineLocations({
                     locations: [{ title: 'Homepage', href: '/' }],
                   }),
