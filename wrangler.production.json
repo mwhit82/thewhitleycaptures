@@ -19,5 +19,17 @@
     "NEXT_PUBLIC_SANITY_DATASET": "production",
     "SANITY_API_VERSION": "2026-09-27",
     "SITE_URL": "https://www.thewhitleycaptures.com"
-  }
+  },
+  "routes": [
+    {
+      "pattern": "www.thewhitleycaptures.com",
+      "custom_domain": true,
+      "zone_id": "c4a802404ace1d298f2a968925822448"
+    },
+    {
+      "pattern": "thewhitleycaptures.com",
+      "custom_domain": true,
+      "zone_id": "c4a802404ace1d298f2a968925822448"
+    }
+  ]
 }

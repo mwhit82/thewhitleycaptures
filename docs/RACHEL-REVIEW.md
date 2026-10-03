@@ -1,10 +1,12 @@
 # Rachel’s website review
 
-Website: https://thewhitleycaptures-preview.thewhitleycaptures.workers.dev
+Live website: https://www.thewhitleycaptures.com
 
-Editing Studio: https://thewhitleycaptures-preview.thewhitleycaptures.workers.dev/studio
+Retained review website: https://thewhitleycaptures-preview.thewhitleycaptures.workers.dev
 
-The preview works on your phone or laptop from any network. Sign in to Studio with your existing Sanity account. The Webflow website is still live and unchanged.
+Editing Studio: https://www.thewhitleycaptures.com/studio
+
+The preview works on your phone or laptop from any network. Sign in to Studio with your existing Sanity account. The new website is live. Publishing in either Studio updates the same content on the live and review websites; use drafts and Preview website to review unpublished changes.
 
 ## What to review
 

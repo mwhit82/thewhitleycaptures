@@ -2,7 +2,7 @@
 
 ## Getting in
 
-Open `/studio` on the review website (locally, http://localhost:3000/studio). Sign in with the Sanity account that belongs to The Whitley Captures. Mark must first import the starting content and allow this website address in Sanity; setup instructions are below.
+Open https://www.thewhitleycaptures.com/studio and sign in with your existing Sanity account. The production Studio and authenticated draft preview were verified at launch on 3 October 2026. The separate review site remains available; both use the same Sanity dataset.
 
 Choose **Edit website**. The left menu contains Homepage, Photography services, Photo galleries, Testimonials and Site settings. Ordinary edits do not need GitHub or hosting access.
 
@@ -38,7 +38,7 @@ Choose **Preview website** in Studio. With preview enabled, the site says “Dra
 
 After publishing, the normal staging site updates within about a minute; refresh it after that. Exit preview to check the published version. A failed preview setup never publishes a draft automatically.
 
-If preview says it needs a Viewer token, Mark must finish the setup below. Until then, drafts can be saved in Studio, but only published content is shown on the normal website. Publishing here updates the replacement website’s content only; it does not change Webflow or the live domain.
+If preview says it needs a Viewer token, Mark must finish the setup below. Until then, drafts can be saved in Studio, but only published content is shown on the normal website. Publishing updates the live website and the review website because they share the same dataset. Save a draft and use Preview website when you want to review changes before making them public.
 
 ## Setup for Mark
 
@@ -65,4 +65,4 @@ If Studio shows **Preview setup**, editing and saving are available, but draft p
 
 ## Rachel’s review update
 
-The homepage now supports three ordered hero photographs and an awards introduction. Photo galleries supply the complete portfolio and the first three service-page photographs. Client guides and awards have their own Studio collection, preserved page addresses and draft-preview links. See [Rachel’s review guide](RACHEL-REVIEW.md) for editing steps and the pre-launch content checklist. The migration never replaces existing articles or drafts; see [migration details](REVIEW-UPDATE.md).
+The homepage now supports three ordered hero photographs and an awards introduction. Photo galleries supply the complete photo collections displayed on service pages. Client guides and awards have their own Studio collection, preserved page addresses and draft-preview links. See [Rachel’s review guide](RACHEL-REVIEW.md) for editing steps and the pre-launch content checklist. The migration never replaces existing articles or drafts; see [migration details](REVIEW-UPDATE.md).
