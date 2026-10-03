@@ -15,6 +15,7 @@ export const config = {
     '/price/:path*',
     '/blog/:path*',
     '/portfolio/:path*',
+    '/Portfolio/:path*',
     '/prices/:path*',
     '/post/:path*',
     '/rte-styling',

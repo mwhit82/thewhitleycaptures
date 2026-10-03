@@ -24,6 +24,13 @@ test('legacy URLs return direct permanent redirects or intentional gone response
       expect(u.searchParams.get('utm_source')).toBe('test');
       expect(u.searchParams.has('tab')).toBe(false);
     }
+  const capitalised = await request.get('/Portfolio?tab=baby', {
+    maxRedirects: 0,
+  });
+  expect(capitalised.status()).toBe(301);
+  expect(new URL(capitalised.headers().location).pathname).toBe(
+    '/prices/baby-newborn',
+  );
   for (const path of [
     ...mapping.retired,
     ...['corporate', 'landscape', 'mini-shoots'].map(

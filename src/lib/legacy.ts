@@ -6,7 +6,9 @@ export function legacyResponse(
 ): Response | null {
   if (!['GET', 'HEAD'].includes(request.method)) return null;
   const url = new URL(request.url);
-  const path = url.pathname.replace(/\/+$/, '') || '/';
+  const requestedPath = url.pathname.replace(/\/+$/, '') || '/';
+  // The old site's navigation also linked to this capitalised spelling.
+  const path = requestedPath === '/Portfolio' ? '/portfolio' : requestedPath;
   let target = (mapping.redirects as Record<string, string>)[path];
   let gone = mapping.retired.includes(path);
   if (path === '/portfolio') {
