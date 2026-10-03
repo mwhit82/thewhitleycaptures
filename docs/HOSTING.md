@@ -127,3 +127,21 @@ PLAYWRIGHT_BASE_URL=https://thewhitleycaptures-preview.thewhitleycaptures.worker
 ## Eventual production launch — separate approval
 
 Cloudflare is the intended production host, but this milestone does not perform cutover. Complete the URL/redirect/legal/pricing review in `MIGRATION.md`, approve the canonical host, snapshot DNS including mail records and agree rollback before changing anything. Update `SITE_URL` and deliberately change `SITE_MODE=production` in the configuration, run `npm run check:launch`, rebuild, and verify indexing/sitemap/canonicals on the approved host. Add its exact Sanity CORS origin. Obtain explicit approval before attaching the domain or changing DNS. Keep Webflow available throughout the rollback window.
+
+## Separate production promotion
+
+The temporary preview continues to deploy from `main` using `wrangler.json`. The new production Worker uses `wrangler.production.json`, canonical `https://www.thewhitleycaptures.com`, and production indexing. Its workers.dev address and version preview URLs are disabled. No domain routes are attached in this preparation commit.
+
+After review, from a clean checkout of the approved commit:
+
+```sh
+npm ci
+npm run lint
+npm run typecheck
+npm run build:production
+npm run deploy:production:built -- <reviewed-commit-hash>
+```
+
+The promotion command refuses a dirty checkout, the wrong Worker configuration, or an artifact built from a different/dirty commit. Do not connect production to automatic preview-branch builds. Add the existing server-only Viewer secret to the production Worker and allow the exact production origin in Sanity CORS before signed-in preview verification. Attach both domain names only at the separately agreed cutover. Save the resulting Cloudflare deployment version for rollback.
+
+See `docs/launch/READINESS.md` for the 24-hour Webflow overlap and cancellation gates. After Webflow cancellation, rollback means restoring a known-good Cloudflare deployment, not pointing DNS back to Webflow.

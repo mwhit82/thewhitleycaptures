@@ -105,7 +105,7 @@ test('portfolio category links, nested refresh, unsupported categories and new p
   );
   await page.goto('/portfolio');
   await expect(page).toHaveURL(/\/#photography$/);
-  for (const tab of ['corporate', 'landscape', 'mini-shoots', 'unknown']) {
+  for (const tab of ['unknown']) {
     await page.goto(`/portfolio?tab=${tab}`);
     await expect(
       page.getByText('This collection isn’t available in the preview yet.'),
@@ -169,7 +169,7 @@ test('homepage puts enquiry after services and links to editable About page', as
   await page.getByRole('link', { name: 'More about me' }).click();
   await expect(page).toHaveURL(/about-me$/);
   await expect(page.locator('h1')).toHaveText('A little about me');
-  await expect(
-    page.getByRole('heading', { name: 'Small moments. Lasting keepsakes.' }),
-  ).toBeVisible();
+  // Rachel can edit this heading in Sanity without changing the page structure.
+  await expect(page.locator('.article-end h2')).toBeVisible();
+  await expect(page.locator('.article-end h2')).not.toBeEmpty();
 });

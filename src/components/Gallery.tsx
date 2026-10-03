@@ -41,6 +41,7 @@ export function Gallery({ gallery }: { gallery: GalleryContent }) {
             >
               <Photo
                 image={image}
+                natural
                 sizes="(max-width: 600px) 100vw, (max-width: 1000px) 50vw, 40vw"
               />
               <span className="gallery-zoom" aria-hidden="true">

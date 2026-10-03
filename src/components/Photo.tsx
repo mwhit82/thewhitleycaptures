@@ -20,12 +20,14 @@ export function Photo({
   className = '',
   sizes = '100vw',
   priority = false,
+  natural = false,
   onLoad,
 }: {
   image: ContentImage | null | undefined;
   className?: string;
   sizes?: string;
   priority?: boolean;
+  natural?: boolean;
   onLoad?: () => void;
 }) {
   if (!image?.src || !image.width || !image.height)
@@ -54,7 +56,10 @@ export function Photo({
       loading={priority ? 'eager' : 'lazy'}
       fetchPriority={priority ? 'high' : undefined}
       className={className}
-      style={imageStyle(image)}
+      style={{
+        ...imageStyle(image),
+        ...(natural ? { aspectRatio: `${image.width} / ${image.height}` } : {}),
+      }}
     />
   );
 }

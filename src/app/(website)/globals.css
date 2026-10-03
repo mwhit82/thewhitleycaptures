@@ -1824,3 +1824,55 @@ body:has(.lightbox[open]) {
     grid-template-columns: 1fr;
   }
 }
+
+/* Column order matches DOM, keyboard and enlarged-image order. */
+.service-gallery .gallery {
+  display: block;
+  column-count: 3;
+  column-gap: 24px;
+}
+.service-gallery .gallery figure {
+  break-inside: avoid;
+  margin: 0 0 24px;
+  display: inline-block;
+  width: 100%;
+}
+.service-gallery .gallery img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: auto;
+}
+.intro-copy .signature {
+  width: fit-content;
+  line-height: 1.15;
+  margin-block: 32px;
+  transform-origin: center;
+}
+@media (max-width: 1000px) {
+  .service-gallery .gallery {
+    column-count: 2;
+  }
+}
+@media (max-width: 600px) {
+  .service-gallery .gallery {
+    column-count: 1;
+  }
+}
+.privacy-page {
+  max-width: 850px;
+}
+.privacy-page h1 {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  margin-bottom: 2rem;
+}
+.privacy-page h2 {
+  font-size: 2rem;
+  margin: 2rem 0 1rem;
+}
+.privacy-page p {
+  white-space: pre-line;
+  margin-bottom: 1rem;
+}
+.privacy-page a {
+  text-decoration: underline;
+}

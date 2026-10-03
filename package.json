@@ -19,7 +19,9 @@
     "build:cloudflare": "vite build",
     "preview:cloudflare": "wrangler dev --config dist/server/wrangler.json",
     "deploy:cloudflare": "vinext-cloudflare deploy --config wrangler.json",
-    "deploy:cloudflare:built": "vinext-cloudflare deploy --config dist/server/wrangler.json --skip-build"
+    "deploy:cloudflare:built": "vinext-cloudflare deploy --config dist/server/wrangler.json --skip-build",
+    "build:production": "node scripts/build-production.mjs",
+    "deploy:production:built": "node scripts/promote-production.mjs"
   },
   "engines": {
     "node": ">=22.13.0"

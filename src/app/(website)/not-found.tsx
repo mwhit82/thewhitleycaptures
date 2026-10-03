@@ -12,6 +12,11 @@ export default function NotFound() {
           <ArrowIcon direction="up-right" />
         </span>
       </Link>
+      <p>
+        <Link href="/#photography">Photography sessions</Link> ·{' '}
+        <Link href="/client-guides">Client guides</Link> ·{' '}
+        <Link href="/#enquire">Contact Rachel</Link>
+      </p>
     </main>
   );
 }

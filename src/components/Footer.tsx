@@ -42,7 +42,7 @@ export function Footer({ settings }: { settings: SiteSettings }) {
           © {new Date().getFullYear()} {settings.name}
         </span>
         <span>Photography by Rachel Whitley</span>
-        <a href={settings.privacyUrl}>Privacy policy</a>
+        <a href="/privacy-policy">Privacy policy</a>
       </div>
     </footer>
   );

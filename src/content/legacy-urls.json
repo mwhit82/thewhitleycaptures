@@ -1,0 +1,26 @@
+{
+  "redirects": {
+    "/about-us": "/about-me",
+    "/contact": "/#enquire",
+    "/testimonials": "/#kind-words",
+    "/price/price-summary": "/#photography",
+    "/blog": "/client-guides"
+  },
+  "retired": [
+    "/post/all-you-need-to-know-about-our-baby-photo-shoots",
+    "/post/five-reasons-a-sitter-shoot-is-a-great-first-year-milestone",
+    "/post/how-to-take-your-own-newborn-captures-when-youre-unable-to-use-a-professional",
+    "/post/is-our-photography-style-right-for-you",
+    "/post/oh-boy-what-a-christmas",
+    "/post/our-post-lockdown-safety-measures",
+    "/post/our-top-5-extra-special-birthday-shoot-ideas",
+    "/post/welcome-and-what-to-expect",
+    "/post/what-to-wear-on-a-photoshoot",
+    "/post/why-we-are-baby-led-in-our-approach-to-photo-shoots",
+    "/prices/corporate",
+    "/prices/landscape-prints",
+    "/prices/mini-shoots",
+    "/rte-styling",
+    "/style-guide"
+  ]
+}

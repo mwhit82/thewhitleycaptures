@@ -1,7 +1,8 @@
 import portfolio from './portfolio-images.json' with { type: 'json' };
 import type { Gallery } from '../types';
 import i from './images.json' with { type: 'json' };
-export const galleries: Gallery[] = [
+import snapshot from './gallery-snapshot.json' with { type: 'json' };
+const originalGalleries: Gallery[] = [
   {
     id: 'featured',
     title: 'A few favourite moments',
@@ -41,7 +42,7 @@ export const galleries: Gallery[] = [
   })),
 ];
 
-for (const gallery of galleries) {
+for (const gallery of originalGalleries) {
   const extra = portfolio[gallery.id as keyof typeof portfolio] || [];
   gallery.images = [
     ...gallery.images,
@@ -50,3 +51,23 @@ for (const gallery of galleries) {
     ),
   ];
 }
+
+// Published launch snapshot includes Rachel's existing selections followed by
+// the append-only import. Assets are local, so this provider needs no CMS access.
+export const galleries: Gallery[] = originalGalleries.map((original) => {
+  const current = snapshot.find(
+    (gallery) => gallery.id === `gallery-${original.id}`,
+  );
+  return current
+    ? {
+        ...current,
+        id: original.id,
+        images: current.images.map((image) => ({
+          ...image,
+          caption: image.caption ?? undefined,
+          sourceUrl: image.sourceUrl ?? undefined,
+          sourcePage: image.sourcePage ?? undefined,
+        })),
+      }
+    : original;
+});
